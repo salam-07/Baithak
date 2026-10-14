@@ -1,0 +1,38 @@
+{
+  "name": "baithak-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "API for Baithak by Echo — a place to read and share Punjab's folk stories.",
+  "type": "module",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "test": "node --test",
+    "seed:keywords": "node src/scripts/seed-keywords.js",
+    "seed:demo": "node src/scripts/seed-demo.js",
+    "seed:demo:fresh": "node src/scripts/seed-demo.js --fresh",
+    "prune:interests": "node src/scripts/prune-interests.js",
+    "rebuild:counters": "node src/scripts/rebuild-counters.js",
+    "indexes": "node src/scripts/sync-indexes.js",
+    "verify:keywords": "node src/scripts/verify-keywords.mjs",
+    "migrate:remove-tags": "node src/scripts/remove-tags.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.7.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.5",
+    "pino": "^9.6.0",
+    "pino-http": "^10.4.0",
+    "zod": "^3.24.1"
+  }
+}
