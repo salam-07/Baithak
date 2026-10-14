@@ -108,12 +108,12 @@ body { margin: 0; }
   .feature-title h3 { font-size: 31px; }
 }
 @media (max-width: 600px) {
-  .landing-nav { padding: 20px 6%; align-items: flex-start; gap: 12px; }
+  .landing-nav { padding: 20px 6%; align-items: flex-start; flex-wrap: wrap; gap: 12px; }
   .brand { font-size: 29px; gap: 7px; }
   .brand span { font-size: 9px; }
-  .landing-nav nav { gap: 16px; }
+  .landing-nav nav { width: 100%; justify-content: space-between; gap: 12px; }
   .landing-nav nav a { font-size: 10px; }
-  .landing-nav nav a:last-child { display: none; }
+  .landing-nav nav a[href="#our-promise"] { display: none; }
   .landing-nav nav [lang] { font-size: 13px; }
   .landing-hero { height: 100svh; min-height: 760px; max-height: 950px; align-items: flex-start; padding-top: 162px; }
   .hero-mark { width: 86%; transform: none; }

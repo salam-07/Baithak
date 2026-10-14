@@ -1,0 +1,145 @@
+@import '@fontsource/playfair-display/400.css';
+/* Echo's editorial structure, in Baithak's paper, clay and olive.
+   The route class deliberately excludes the landing and all auth screens. */
+.application-ui.baithak-shell { --paper: #f7f2e8; --ink: #302b23; }
+.application-ui.baithak-shell .site-header { min-height: 60px; padding: 8px 24px; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+.application-ui.baithak-shell .site-header .brand { font-size: 27px; color: var(--clay); width: fit-content; }
+.application-ui.baithak-shell .brand span { color: var(--muted); font-size: 10px; }
+.application-ui.baithak-shell .app-layout { display: grid; grid-template-columns: 232px minmax(0, 1fr); max-width: none; padding: 0; margin: 0; }
+.application-ui.baithak-shell .app-sidebar { padding: 20px 10px 28px; border-inline-end: 1px solid var(--rule); gap: 38px; }
+.application-ui.baithak-shell .button { border-radius: 0; min-height: 44px; font-size: 12px; padding: 12px 20px; }
+.application-ui.baithak-shell .button.primary { background: var(--olive); border-color: var(--olive); color: var(--paper); }
+.application-ui.baithak-shell .button.primary:hover { background: var(--clay); border-color: var(--clay); }
+.application-ui.baithak-shell .main-navigation { gap: 0; }
+.application-ui.baithak-shell .nav-link { min-height: 46px; padding: 12px 14px; gap: 12px; font-size: 11px; font-weight: 600; letter-spacing: .075em; text-transform: uppercase; border-radius: 0; }
+.application-ui.baithak-shell .nav-icon svg { width: 17px; height: 17px; }
+.application-ui.baithak-shell .nav-marker { background: var(--olive); border-radius: 0; transition: none; }
+.application-ui.baithak-shell .nav-marker::after { display: none; }
+.application-ui.baithak-shell .nav-link.active { color: var(--paper); }
+.application-ui.baithak-shell .nav-link:hover:not(.active) { color: var(--clay); background: var(--surface); }
+.application-ui.baithak-shell .nav-link.active .nav-icon { transform: none; }
+.application-ui.baithak-shell .nav-link:focus-visible { outline-offset: -3px; outline-color: var(--clay); }
+.application-ui.baithak-shell .nav-link.active:focus-visible { outline-color: var(--paper); }
+.application-ui.baithak-shell .sidebar-colophon { margin-top: auto; padding: 22px 12px 0; border-top: 1px solid var(--rule); }
+.application-ui.baithak-shell .colophon-brand { display: flex; align-items: center; justify-content: space-between; color: var(--clay); font: 600 12px/1.7 'Manrope', sans-serif; text-decoration: underline; min-height: 44px; }
+.application-ui.baithak-shell .colophon-brand svg { width: 16px; transform: rotate(-45deg); }
+.application-ui.baithak-shell .sidebar-colophon p { margin-top: 5px; color: var(--muted); font-size: 12px; line-height: 1.8; }
+.application-ui.baithak-shell .app-content { border: 0; padding: 52px clamp(32px, 6vw, 100px) 72px; }
+.application-ui.baithak-shell .workspace-page { max-width: 760px; margin-inline: auto; }
+.application-ui.baithak-shell .page-heading { padding-bottom: 23px; align-items: center; border-color: var(--ink); }
+.application-ui.baithak-shell .page-heading h1 { font-size: 26px; line-height: 1.4; letter-spacing: -.02em; }
+.application-ui.baithak-shell .empty-state { min-height: 0; padding-block: 56px; display: block; }
+.application-ui.baithak-shell .empty-copy { max-width: 55ch; }
+.application-ui.baithak-shell .empty-copy h2, .application-ui.baithak-shell .profile-intro h2 { font-size: clamp(28px, 2.5vw, 34px); line-height: 1.35; }
+.application-ui.baithak-shell .empty-copy p { font-size: 15px; line-height: 1.8; margin-top: 16px; }
+.application-ui.baithak-shell .empty-copy .text-link { margin-top: 24px; }
+.application-ui.baithak-shell .text-link { color: var(--clay); }
+.application-ui.baithak-shell .text-link:hover { text-decoration-thickness: 2px; }
+.application-ui.baithak-shell .profile-intro { padding-block: 40px 32px; }
+.application-ui.baithak-shell .profile-intro > p { color: var(--muted); margin-top: 12px; font-size: 14px; }
+.application-ui.baithak-shell .profile-actions { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; margin-top: 24px; }
+.application-ui.baithak-shell .profile-setting { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 22px; border-block: 1px solid var(--rule); text-decoration: none; }
+.application-ui.baithak-shell .profile-setting > span { display: grid; gap: 5px; }
+.application-ui.baithak-shell .profile-setting strong { font-size: 14px; }
+.application-ui.baithak-shell .profile-setting span span { font-size: 13px; color: var(--muted); }
+.application-ui.baithak-shell .profile-setting:hover strong { text-decoration: underline; text-underline-offset: 5px; }
+.application-ui.baithak-shell .profile-setting svg { color: var(--clay); width: 18px; }
+.application-ui.baithak-shell .profile-signout { padding-top: 24px; }
+.application-ui.baithak-shell .settings-section { padding-top: 32px; }
+.application-ui.baithak-shell .language-choice-copy strong { font: 600 16px/1.7 'Manrope', sans-serif; }
+.application-ui.baithak-shell .language-choice-copy[lang="pa-Arab"] strong { font: 400 20px/2 'Noto Nastaliq Urdu', serif; }
+.application-ui.baithak-shell .language-choice { padding: 22px 12px; }
+.application-ui.baithak-shell .language-choice[data-selected="true"] { background: var(--surface); }
+.application-ui.baithak-shell .language-choice input { accent-color: var(--olive); }
+.application-ui.baithak-shell .welcome-note { border-radius: 0; margin-bottom: 22px; }
+.application-ui.baithak-shell:lang(pa-Arab) .nav-link,
+.application-ui.baithak-shell:lang(pa-Arab) .page-heading h1 { font-size: 26px; line-height: 2; }
+.application-ui.baithak-shell:lang(pa-Arab) .empty-copy h2,
+.application-ui.baithak-shell:lang(pa-Arab) .profile-intro h2 { font-size: 28px; line-height: 2; }
+@media (max-width: 1100px) {
+  .application-ui.baithak-shell .app-layout { grid-template-columns: 210px minmax(0, 1fr); }
+}
+@media (max-width: 680px) {
+  .application-ui.baithak-shell .sidebar-colophon { display: none; }
+  /* The dock's one measure, declared here because the dock only exists here. The
+     bar, the clearance the shell keeps under every page, and the Feed's own reserve
+     all read it, so the three cannot drift apart — which is how the bar had come to
+     be taller than the room kept for it. One 67px cell under one 1px rule; the
+     device's safe area is added below the bar, never taken out of it. */
+  .application-ui.baithak-shell { --dock-height: 68px; }
+  .application-ui.baithak-shell .site-header { grid-template-columns: 1fr auto; padding: 8px 20px; }
+  .application-ui.baithak-shell .app-layout { display: block; padding-bottom: calc(var(--dock-height) + 32px + env(safe-area-inset-bottom)); }
+  .application-ui.baithak-shell .app-sidebar { position: static; height: auto; padding: 0; border: 0; overflow: visible; }
+  /* Four equal cells, and no column count anywhere. The bar has no
+     `grid-template-columns` on purpose: three stylesheets describe this bar, two of
+     them declared it five columns wide, and when one of those sorted later than this
+     one the dock drew four items into five slots — the cells sat left of centre with
+     an empty slot on the right, which is what a reader sees when the layout is
+     written in one place and contradicted in another. Flex cannot be contradicted:
+     the cells divide whatever width there is, and a stray `repeat(5)` somewhere else
+     is inert rather than a bug. */
+  .application-ui.baithak-shell .main-navigation { inset-inline: 0; bottom: 0; display: flex; flex-direction: row; min-height: var(--dock-height); padding: 0 0 env(safe-area-inset-bottom); border-top: 1px solid var(--rule); border-radius: 0; background: var(--paper); box-shadow: none; }
+  /* One continuous field follows selection without moving the labels. */
+  .application-ui.baithak-shell .nav-marker { display: block; background: var(--surface); transition: transform 420ms cubic-bezier(.16, 1, .3, 1), opacity 140ms ease-out; }
+  .application-ui.baithak-shell .nav-link { flex: 1 1 0; min-width: 0; position: relative; min-height: calc(var(--dock-height) - 1px); padding: 10px 2px; gap: 6px; font-size: 10px; letter-spacing: .075em; color: var(--muted); }
+  .application-ui.baithak-shell .nav-icon svg { width: 20px; height: 20px; }
+  .application-ui.baithak-shell .nav-link.active, .application-ui.baithak-shell .nav-link.active:hover { background: transparent; color: var(--clay); }
+  .application-ui.baithak-shell .nav-icon { transition: transform 360ms cubic-bezier(.16, 1, .3, 1); }
+  .application-ui.baithak-shell .nav-link.active .nav-icon { transform: translateY(-2px); }
+  .application-ui.baithak-shell .nav-link:active .nav-icon { transform: translateY(1px) scale(.92); transition-duration: 100ms; }
+  /* Touch has no hover to leave, and a phone keeps the last thing you pressed in the
+     hover state until you press something else — which would leave a tint on a cell
+     that is not where you are, the exact confusion the field exists to prevent. Where
+     no pointer can rest on a cell, the dock has no hover at all; the press feedback is
+     the icon's own, and it is the only one the bar needs. */
+  @media (hover: none) {
+    .application-ui.baithak-shell .nav-link:hover:not(.active) { background: none; color: var(--muted); }
+  }
+  .application-ui.baithak-shell .nav-link:focus-visible { outline: 2px solid var(--clay); outline-offset: -3px; }
+  .application-ui.baithak-shell .nav-link.active:focus-visible { outline-color: var(--clay); }
+  .application-ui.baithak-shell .app-content { padding: 30px 24px 40px; }
+  .application-ui.baithak-shell .page-heading { padding-bottom: 18px; }
+  .application-ui.baithak-shell .empty-state { padding-block: 40px; }
+  .application-ui.baithak-shell .empty-copy h2 { font-size: 30px; }
+  .application-ui.baithak-shell .empty-copy p { font-size: 14px; }
+  /* Shahmukhi sits on a longer line than Latin and needs the room for its
+     descenders, so the label keeps its own size and leading inside the same cell —
+     the same measure as every other cell, so all four stay one height. */
+  .application-ui.baithak-shell:lang(pa-Arab) .nav-link { min-height: calc(var(--dock-height) - 1px); font-size: 11px; line-height: 2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .application-ui.baithak-shell .nav-link .nav-icon { transform: none; }
+  .application-ui.baithak-shell *, .application-ui.baithak-shell *::before, .application-ui.baithak-shell *::after { animation: none !important; transition: none !important; }
+}
+
+.application-ui.baithak-shell .profile-write { margin-bottom: 20px; }
+
+.application-ui.baithak-shell .site-header .language-switch { justify-self: end; }
+@media (max-width: 380px) {
+  .application-ui.baithak-shell .site-header { padding-inline: 12px; gap: 8px; }
+  .application-ui.baithak-shell .site-header .brand { font-size: 25px; }
+  .application-ui.baithak-shell .site-header .language-mode > span { padding-inline: 6px; }
+}
+.application-ui.baithak-shell:lang(pa-Arab) .colophon-brand { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.3; }
+
+.application-ui.baithak-shell .echo-wordmark { color: var(--ink); font: 400 25px/1.4 'Playfair Display', Georgia, serif; letter-spacing: normal; }
+.application-ui.baithak-shell .colophon-brand { text-decoration: none; }
+.application-ui.baithak-shell .colophon-brand:hover .echo-wordmark { text-decoration: underline; text-underline-offset: 5px; }
+
+/* The Feed route. A deck holds one screen, so this route swaps the reading
+   column's margins for a fixed height: everything above the deck (the header,
+   the welcome note) and everything below it (the bottom navigation, the action
+   rail) is subtracted here, once, and stage.css measures every card from that.
+   --feed-reserve is the shell's own bottom clearance, so it also becomes the
+   layout's bottom padding and the page keeps exactly one screen tall. */
+.application-ui.baithak-shell .app-layout.feed-route { --feed-reserve: clamp(18px, 2.6vh, 32px); --feed-stage-h: calc(100svh - var(--header-height) - var(--feed-reserve)); }
+.application-ui.baithak-shell .app-layout.feed-route .app-content { height: var(--feed-stage-h); padding: 0 clamp(20px, 4vw, 56px); overflow: hidden; display: flex; flex-direction: column; }
+.application-ui.baithak-shell .app-layout.feed-route .app-route { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.application-ui.baithak-shell .app-layout.feed-route .welcome-note { padding-top: 16px; }
+@media (max-width: 680px) {
+  /* The action row is inside the feed grid; only navigation and its safe area
+     need reserving outside it. */
+  .application-ui.baithak-shell .app-layout.feed-route { --feed-reserve: calc(var(--dock-height) + env(safe-area-inset-bottom)); padding-bottom: var(--feed-reserve); }
+  .application-ui.baithak-shell .app-layout.feed-route .app-content { padding-inline: 14px; }
+}
+

@@ -1,0 +1,304 @@
+@import '@fontsource/manrope/400.css';
+@import '@fontsource/manrope/600.css';
+@import '@fontsource/bodoni-moda/500.css';
+@import '@fontsource/noto-nastaliq-urdu/400.css';
+
+/* All rules are scoped: the existing landing page owns its own visual system. */
+.application-ui {
+  --paper: #f5efe3;
+  --ink: #302b23;
+  --muted: #665c4d;
+  --clay: #874632;
+  --olive: #3e4737;
+  --rule: #cfc3ae;
+  --surface: #eae2d2;
+  --field: #fcf9f2;
+  --error: #943b2b;
+  --header-height: 80px;
+  --ease: cubic-bezier(.16, 1, .3, 1);
+  min-height: 100svh;
+  background: var(--paper);
+  color: var(--ink);
+  font: 16px/1.65 'Manrope', sans-serif;
+  font-synthesis: none;
+  scrollbar-color: var(--muted) var(--paper);
+}
+.application-ui *, .application-ui *::before, .application-ui *::after { box-sizing: border-box; }
+.application-ui h1, .application-ui h2, .application-ui p { margin: 0; }
+.application-ui h1, .application-ui h2 { font-family: 'Bodoni Moda', Georgia, serif; font-weight: 500; letter-spacing: -.025em; text-wrap: balance; }
+.application-ui h1 { font-size: clamp(36px, 4vw, 54px); line-height: 1.15; }
+.application-ui h2 { font-size: 32px; line-height: 1.3; }
+.application-ui a { color: inherit; text-underline-offset: 5px; }
+.application-ui button, .application-ui input, .application-ui select { font: inherit; color: inherit; }
+.application-ui button, .application-ui select, .application-ui summary { cursor: pointer; }
+.application-ui button:disabled { opacity: .65; cursor: wait; }
+.application-ui svg { flex-shrink: 0; }
+.application-ui ::selection { color: var(--paper); background: var(--clay); }
+.application-ui :focus-visible { outline: 2px solid var(--clay); outline-offset: 5px; }
+.application-ui main:focus { outline: none; }
+.application-ui .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.application-ui .skip-link { position: fixed; top: -160px; inset-inline-start: 16px; z-index: 100; padding: 12px 20px; background: var(--paper); }
+.application-ui .skip-link:focus { top: 12px; }
+.application-ui .site-header { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 15px clamp(20px, 4vw, 64px); background: var(--paper); border-bottom: 1px solid var(--rule); }
+.application-ui .brand { display: inline-flex; align-items: baseline; gap: 12px; font: 34px/1.4 'Bodoni Moda', Georgia, serif; letter-spacing: -.035em; text-decoration: none; }
+.application-ui .brand span { font: 11px/1.5 'Manrope', sans-serif; letter-spacing: 0; white-space: nowrap; }
+.application-ui .language-switch { display: flex; align-items: center; gap: 8px; }
+.application-ui .language-switch > svg { width: 19px; height: 19px; color: var(--muted); }
+.application-ui .language-switch select { width: 145px; min-height: 44px; padding: 6px 8px; border: 1px solid transparent; border-radius: 4px; background: var(--paper); font-family: 'Manrope', 'Noto Nastaliq Urdu', sans-serif; font-size: 14px; }
+.application-ui .language-switch select:hover { border-color: var(--rule); }
+.application-ui .preference-notice { position: fixed; z-index: 40; top: calc(var(--header-height) + 12px); inset-inline-end: 24px; max-width: calc(100vw - 48px); pointer-events: none; }
+.application-ui .preference-notice > span { display: flex; align-items: center; gap: 9px; background: var(--olive); color: var(--paper); padding: 12px 18px; border-radius: 6px; font-size: 14px; box-shadow: 0 6px 20px #302b231f; }
+.application-ui .preference-notice path, .application-ui .welcome-note path { stroke-dasharray: 24; stroke-dashoffset: 0; animation: ink-check 380ms var(--ease); }
+.application-ui .button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px; padding: 12px 24px; border: 1px solid var(--rule); border-radius: 5px; background: transparent; text-decoration: none; font-weight: 600; font-size: 15px; transition: background-color 160ms, border-color 160ms; }
+.application-ui .button.primary { background: var(--clay); border-color: var(--clay); color: var(--paper); }
+.application-ui .button.primary:hover:not(:disabled) { background: #713b2b; border-color: #713b2b; }
+.application-ui .button:not(.primary):hover { background: var(--surface); }
+.application-ui .button > span:not(.busy-mark) { display: inline-flex; align-items: center; justify-content: center; gap: 20px; }
+.application-ui .action-arrow { width: 19px; transition: transform 180ms var(--ease); }
+.application-ui .button:hover .action-arrow { transform: translateX(3px); }
+.application-ui .text-button, .application-ui .text-link, .application-ui .guest-link { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 0; background: none; border: 0; text-decoration: underline; text-underline-offset: 5px; text-align: start; font-size: 14px; }
+.application-ui .text-link svg, .application-ui .guest-link svg { width: 17px; }
+.application-ui fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.application-ui .field { margin-bottom: 24px; }
+.application-ui .field label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600; }
+.application-ui .field-control { display: flex; align-items: stretch; background: var(--field); border: 1px solid #b9ab94; border-radius: 5px; transition: border-color 150ms; }
+.application-ui .field-control:hover { border-color: var(--muted); }
+.application-ui .field-control:focus-within { outline: 2px solid var(--clay); outline-offset: 2px; }
+.application-ui .field-control[data-invalid="true"] { border-color: var(--error); }
+.application-ui .field-prefix { display: flex; align-items: center; padding-inline-start: 14px; color: var(--muted); font-size: 16px; }
+.application-ui .field input { min-width: 0; width: 100%; min-height: 52px; padding: 12px 14px; background: transparent; border: 0; border-radius: 5px; font-size: 16px; caret-color: var(--clay); outline: none; }
+.application-ui .field input:autofill { box-shadow: inset 0 0 0 100px var(--field); }
+.application-ui .reveal { border: 0; background: none; min-width: 64px; padding-inline: 12px; font-size: 13px; text-decoration: underline; }
+.application-ui .field-hint, .application-ui .field-error { margin-top: 8px; font-size: 13px; line-height: 1.6; }
+.application-ui .field-hint { color: var(--muted); }
+.application-ui .field-error { color: var(--error); }
+.application-ui .optional-details { margin-top: -8px; margin-bottom: 24px; }
+.application-ui .optional-details summary { width: fit-content; padding-block: 10px; font-size: 13px; color: var(--muted); }
+.application-ui .optional-details .field { margin-top: 12px; margin-bottom: 0; }
+.application-ui .recovery-note { font-size: 13px; line-height: 1.7; color: var(--muted); padding-block: 0 22px; max-width: 43ch; }
+.application-ui .auth-submit { width: 100%; }
+.application-ui .notice { display: flex; align-items: start; gap: 10px; padding: 14px 16px; margin-bottom: 22px; background: #f1dfd3; color: #783423; border-radius: 6px; font-size: 14px; line-height: 1.65; overflow-wrap: anywhere; }
+.application-ui .notice > svg { width: 19px; height: 19px; margin-top: 2px; }
+.application-ui .notice > div { min-width: 0; }
+.application-ui .notice-success { background: var(--surface); color: var(--olive); }
+.application-ui .busy-mark { width: 15px; height: 15px; border: 1.5px solid currentColor; border-inline-end-color: transparent; border-radius: 50%; animation: busy-turn 800ms linear infinite; flex-shrink: 0; }
+.application-ui .app-layout { display: grid; grid-template-columns: 252px minmax(0, 1fr); max-width: 1320px; margin-inline: auto; min-height: calc(100svh - var(--header-height)); }
+.application-ui .app-sidebar { position: sticky; top: var(--header-height); align-self: start; height: calc(100svh - var(--header-height)); overflow-y: auto; display: flex; flex-direction: column; gap: 40px; padding: 34px 24px; border-inline-end: 1px solid var(--rule); }
+.application-ui .sidebar-account { margin-top: auto; padding-top: 24px; border-top: 1px solid var(--rule); overflow-wrap: anywhere; }
+.application-ui .sidebar-account > p { font-size: 14px; margin-bottom: 14px; }
+.application-ui .sidebar-account .button { width: 100%; padding-inline: 12px; font-size: 14px; }
+.application-ui .sidebar-account > .text-button { display: flex; justify-content: center; width: 100%; margin-top: 8px; }
+.application-ui .account-identity { display: flex; gap: 12px; align-items: center; }
+.application-ui .account-identity > div { min-width: 0; }
+.application-ui .account-identity p { font-size: 14px; font-weight: 600; }
+.application-ui .account-identity span:not(.avatar) { display: block; font-size: 12px; color: var(--muted); }
+.application-ui .avatar { display: inline-grid; place-items: center; flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; color: var(--clay); background: var(--surface); font-family: 'Bodoni Moda', 'Noto Nastaliq Urdu', serif; font-size: 24px; }
+.application-ui .app-content { min-width: 0; padding: 38px clamp(24px, 4vw, 64px); }
+.application-ui .page-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-bottom: 26px; border-bottom: 1px solid var(--rule); }
+.application-ui .page-heading h1 { font-size: 40px; }
+.application-ui .settings-section { max-width: 620px; padding-top: 36px; }
+.application-ui .settings-section h2 { font-family: inherit; font-size: 18px; font-weight: 600; letter-spacing: 0; }
+.application-ui .settings-section > p { margin-block: 12px 28px; max-width: 54ch; font-size: 14px; color: var(--muted); }
+.application-ui .language-choices { border-top: 1px solid var(--rule); }
+.application-ui .language-choice { display: flex; position: relative; align-items: center; gap: 16px; padding: 22px 18px; border-bottom: 1px solid var(--rule); cursor: pointer; transition: background-color 180ms; }
+.application-ui .language-choice:hover { background: var(--surface); }
+.application-ui .language-choice[data-selected="true"] { background: #e7e8da; }
+.application-ui .language-choice input { accent-color: var(--olive); width: 18px; height: 18px; flex-shrink: 0; margin: 0; }
+.application-ui .language-choice-copy { display: flex; flex-direction: column; flex: 1; gap: 3px; min-width: 0; text-align: start; }
+.application-ui .language-choice-copy strong { font-size: 16px; font-weight: 600; }
+.application-ui .language-choice-copy > span { color: var(--muted); font-size: 14px; }
+.application-ui .language-choice-copy[lang="pa-Arab"] { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.3; }
+.application-ui .choice-check { width: 22px; color: var(--olive); }
+.application-ui .welcome-note { display: flex; align-items: center; gap: 10px; color: var(--olive); font-size: 14px; padding-bottom: 22px; }
+.application-ui .status-page { width: min(100%, 580px); padding: 80px 24px; margin-inline: auto; text-align: center; }
+.application-ui .status-page > h1 { margin-bottom: 28px; font-size: 36px; }
+.application-ui .status-page > .busy-mark { display: inline-block; margin-bottom: 16px; }
+.application-ui .status-page > .guest-link { display: flex; justify-content: center; margin-top: 12px; }
+.application-ui:lang(pa-Arab) { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.2; }
+.application-ui:lang(pa-Arab) h1 { font-size: 34px; }
+.application-ui:lang(pa-Arab) h2 { font-size: 30px; }
+.application-ui:lang(pa-Arab) .field-hint, .application-ui:lang(pa-Arab) .notice { line-height: 2.2; }
+@keyframes ink-check { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
+@keyframes busy-turn { to { transform: rotate(360deg); } }
+@media (max-width: 900px) {
+  .application-ui .app-layout { grid-template-columns: 210px minmax(0, 1fr); }
+  .application-ui .app-sidebar { padding-inline: 14px; }
+}
+@media (max-width: 680px) {
+  .application-ui .site-header { padding: 12px 20px; gap: 12px; }
+  .application-ui .brand { font-size: 29px; gap: 7px; }
+  .application-ui .brand span { font-size: 9px; }
+  .application-ui .language-switch { gap: 2px; }
+  .application-ui .language-switch > svg { display: none; }
+  .application-ui .language-switch select { width: 134px; font-size: 13px; padding-inline: 4px; }
+  .application-ui .app-layout { display: flex; flex-direction: column; padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+  .application-ui .app-content { order: 0; padding: 28px 24px; }
+  .application-ui .app-sidebar { order: 1; position: static; height: auto; overflow: visible; border: 0; padding: 0 24px; }
+  .application-ui .sidebar-account { padding-block: 24px; }
+  .application-ui .sidebar-account .button { width: auto; padding-inline: 24px; }
+  .application-ui .sidebar-account > .text-button { justify-content: start; width: fit-content; }
+  .application-ui .page-heading h1 { font-size: 34px; }
+  .application-ui .settings-section { padding-top: 28px; }
+  .application-ui .language-choice { padding: 18px 10px; gap: 12px; }
+  .application-ui .language-choice-copy strong { font-size: 15px; }
+  .application-ui .language-choice-copy > span { font-size: 13px; }
+}
+@media (max-width: 350px) {
+  .application-ui .site-header { padding-inline: 14px; }
+  .application-ui .brand span { display: none; }
+}
+
+/* A single reading surface; the identity is an ink impression, not a second panel. */
+.application-ui { --paper: #f7f2e8; --ink: #292a23; --surface: #eae4d7; }
+.application-ui .site-header { border-bottom: 0; padding-block: 20px; }
+.application-ui .site-header .brand { font-size: 38px; }
+.application-ui .auth-layout { position: relative; isolation: isolate; overflow: clip; min-height: calc(100svh - var(--header-height)); display: grid; place-items: center; padding: 36px 24px 70px; }
+.application-ui .auth-watermark { position: absolute; z-index: -1; width: min(55vw, 800px); inset-inline-end: -140px; bottom: -80px; color: #e9dfce; pointer-events: none; transform: rotate(-8deg); }
+.application-ui .auth-panel { width: min(100%, 460px); padding: 20px 0; }
+.application-ui .auth-route-nav { display: flex; gap: 28px; align-items: center; margin-bottom: 34px; }
+.application-ui .auth-route-nav a { position: relative; display: inline-flex; min-height: 44px; align-items: center; font-size: 14px; color: var(--muted); text-decoration: none; }
+.application-ui .auth-route-nav a::after { content: ''; position: absolute; bottom: 0; inset-inline: 0; height: 2px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 280ms var(--ease); }
+.application-ui .auth-route-nav a[aria-current="page"] { color: var(--ink); font-weight: 600; }
+.application-ui .auth-route-nav a[aria-current="page"]::after, .application-ui .auth-route-nav a:hover::after { transform: scaleX(1); }
+.application-ui .auth-panel h1 { font-size: clamp(52px, 5.4vw, 76px); letter-spacing: -.035em; line-height: 1.05; margin-bottom: 44px; }
+.application-ui .field { margin-bottom: 28px; }
+.application-ui .field label { font-size: 13px; font-weight: 400; color: var(--muted); }
+.application-ui .field-control { position: relative; background: transparent; border: 0; border-bottom: 1px solid #a49985; border-radius: 0; }
+.application-ui .field-control::after { content: ''; position: absolute; bottom: -1px; inset-inline: 0; height: 2px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform 360ms var(--ease); pointer-events: none; }
+.application-ui .field-control:focus-within { outline: none; }
+.application-ui .field-control:focus-within::after { transform: scaleX(1); }
+.application-ui .field-control[data-invalid="true"]::after { background: var(--error); transform: scaleX(1); }
+.application-ui .field input { padding: 6px 0 14px; min-height: 48px; border-radius: 0; font-size: 20px; box-shadow: none; }
+.application-ui .field-prefix { padding-inline: 0 10px; align-items: start; padding-top: 8px; font-size: 20px; }
+.application-ui .reveal { padding-inline: 12px 0; font-size: 12px; }
+.application-ui .field-hint { font-size: 12px; margin-top: 10px; }
+.application-ui .optional-details { margin-bottom: 18px; }
+.application-ui .recovery-note { padding-bottom: 24px; font-size: 12px; }
+.application-ui .button { border-radius: 0; min-height: 54px; }
+.application-ui .button.primary { background: var(--ink); border-color: var(--ink); }
+.application-ui .button.primary:hover:not(:disabled) { background: var(--olive); border-color: var(--olive); }
+.application-ui .auth-submit > span:not(.busy-mark) { width: 100%; justify-content: space-between; }
+.application-ui .auth-panel > .guest-link { display: flex; justify-content: space-between; width: 100%; margin-top: 16px; font-size: 13px; text-decoration: none; }
+.application-ui .auth-panel > .guest-link:hover { text-decoration: underline; }
+.application-ui .auth-panel > .guest-link svg { margin-inline-end: 4px; }
+.application-ui .app-layout { max-width: 1440px; grid-template-columns: 246px minmax(0, 1fr); padding-inline: 32px; }
+.application-ui .app-sidebar { border: 0; padding: 50px 26px 32px 0; }
+.application-ui .main-navigation { position: relative; display: flex; flex-direction: column; gap: 8px; isolation: isolate; }
+.application-ui .nav-link { display: flex; align-items: center; gap: 16px; min-height: 58px; padding: 12px 6px; text-decoration: none; color: var(--muted); font-size: 16px; transition: color 180ms, transform 180ms var(--ease); -webkit-tap-highlight-color: transparent; }
+.application-ui .nav-icon { display: grid; place-items: center; transition: transform 320ms var(--ease); }
+.application-ui .nav-icon svg { width: 20px; height: 20px; }
+.application-ui .nav-link:hover { color: var(--ink); }
+.application-ui .nav-link:active .nav-icon { transform: scale(.85); }
+.application-ui .nav-link.active { color: var(--ink); font-weight: 600; }
+.application-ui .nav-marker { position: absolute; top: 0; left: 0; z-index: -1; opacity: 0; pointer-events: none; transition: transform 460ms cubic-bezier(.22, 1, .36, 1); }
+.application-ui .nav-marker::after { content: ''; position: absolute; bottom: 0; inset-inline: 42px 6px; height: 1px; background: var(--ink); }
+.application-ui .sidebar-account { border-top: 0; padding-top: 28px; }
+.application-ui .sidebar-account > p { color: var(--muted); font-size: 13px; }
+.application-ui .sidebar-account .button { min-height: 46px; font-size: 13px; }
+.application-ui .app-content { padding: 38px 40px 60px 46px; border-inline-start: 1px solid var(--rule); }
+.application-ui .page-heading { align-items: end; padding-bottom: 30px; }
+.application-ui .page-heading h1 { font-size: clamp(50px, 5.5vw, 76px); line-height: 1.05; letter-spacing: -.035em; }
+.application-ui .empty-state { min-height: 540px; padding-block: 46px; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; }
+.application-ui .empty-calligraphy { width: min(65%, 460px); margin-inline-start: auto; color: #c7b89c; }
+.application-ui .empty-copy { max-width: 420px; }
+.application-ui .empty-copy h2 { font-size: 34px; }
+.application-ui .empty-copy p { color: var(--muted); font-size: 14px; margin-top: 12px; }
+.application-ui .empty-copy .text-link { margin-top: 20px; font-size: 13px; color: var(--clay); }
+.application-ui .settings-section { padding-top: 40px; }
+.application-ui .language-choice { padding-block: 26px; padding-inline: 0 16px; }
+.application-ui .language-choice[data-selected="true"] { background: transparent; }
+.application-ui .language-choice:hover { background: #eee8dc; }
+.application-ui .language-choice-copy strong { font-family: 'Bodoni Moda', Georgia, serif; font-size: 26px; font-weight: 500; }
+.application-ui .language-choice-copy[lang="pa-Arab"] strong { font-family: 'Noto Nastaliq Urdu', serif; font-size: 22px; }
+.application-ui .language-choice-copy[lang="pa-Latn"] { font-family: 'Manrope', sans-serif; }
+.application-ui .language-choice input { accent-color: var(--ink); }
+.application-ui .choice-check { color: var(--ink); }
+.application-ui:lang(pa-Arab) .auth-panel h1 { font-size: 42px; line-height: 1.9; letter-spacing: normal; margin-bottom: 32px; }
+.application-ui:lang(pa-Arab) .page-heading h1 { font-size: 46px; line-height: 1.7; letter-spacing: normal; }
+.application-ui:lang(pa-Arab) .empty-copy h2 { font-size: 30px; }
+.application-ui:lang(pa-Arab) .field-control::after, .application-ui:lang(pa-Arab) .auth-route-nav a::after { transform-origin: right; }
+@media (max-width: 900px) {
+  .application-ui .app-layout { grid-template-columns: 196px minmax(0, 1fr); padding-inline: 24px; }
+  .application-ui .app-sidebar { padding-inline-end: 22px; }
+  .application-ui .app-content { padding-inline: 30px 0; }
+  .application-ui .nav-link { font-size: 14px; gap: 12px; }
+}
+@media (max-width: 680px) {
+  .application-ui .site-header { padding: 14px 22px; border-bottom: 1px solid var(--rule); }
+  .application-ui .site-header .brand { font-size: 30px; }
+  .application-ui .auth-layout { padding: 24px 28px 48px; display: block; }
+  .application-ui .auth-panel { margin-inline: auto; padding-block: 12px; }
+  .application-ui .auth-watermark { display: none; }
+  .application-ui .auth-route-nav { margin-bottom: 30px; gap: 24px; }
+  .application-ui .auth-panel h1 { font-size: 54px; line-height: 1.05; margin-bottom: 38px; max-width: 8ch; }
+  .application-ui .field { margin-bottom: 26px; }
+  .application-ui .field input { font-size: 18px; }
+  .application-ui .field-hint, .application-ui .recovery-note { font-size: 12px; }
+  .application-ui .app-layout { display: flex; flex-direction: column; padding-inline: 0; padding-bottom: calc(132px + env(safe-area-inset-bottom)); }
+  .application-ui .app-sidebar { position: static; padding: 0 26px; height: auto; order: 1; }
+  .application-ui .app-content { border: 0; padding: 30px 26px 24px; order: 0; }
+  .application-ui .page-heading { padding-bottom: 22px; }
+  .application-ui .page-heading h1 { font-size: 56px; }
+  .application-ui .empty-state { min-height: 410px; padding-block: 32px 12px; gap: 38px; }
+  .application-ui .empty-calligraphy { width: 76%; margin-inline: auto 0; }
+  .application-ui .empty-copy h2 { font-size: 32px; }
+  .application-ui .sidebar-account { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; border-top: 1px solid var(--rule); padding-top: 22px; }
+  .application-ui .sidebar-account > p { flex-basis: 100%; margin-bottom: 0; }
+  .application-ui .sidebar-account > .text-button { width: auto; margin: 0; }
+  .application-ui .main-navigation { position: fixed; z-index: 35; inset-inline: 12px; bottom: max(14px, env(safe-area-inset-bottom)); display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; padding: 7px; border: 0; border-radius: 28px; background: #292a23; color: #f5efe3; box-shadow: 0 12px 28px #292a232b; isolation: isolate; }
+  .application-ui .nav-link { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; min-height: 66px; padding: 9px 2px 8px; gap: 6px; font-size: 10px; line-height: 1.35; text-align: center; color: #e9e2d5; border-radius: 22px; }
+  .application-ui .nav-link:hover { color: #ffffff; }
+  .application-ui .nav-link.active, .application-ui .nav-link.active:hover { color: var(--ink); font-weight: 600; }
+  .application-ui .nav-marker { z-index: 0; border-radius: 22px; background: #f1dfbb; }
+  .application-ui .nav-marker::after { display: none; }
+  .application-ui .nav-icon svg { width: 22px; height: 22px; }
+  .application-ui .nav-link.active .nav-icon { transform: translateY(-2px); }
+  .application-ui .nav-link:active .nav-icon { transform: translateY(1px) scale(.82); }
+  .application-ui .nav-link:focus-visible { outline: 2px solid #dfca9f; outline-offset: 3px; }
+  .application-ui .nav-link.active:focus-visible { outline-color: var(--ink); outline-offset: -4px; }
+  .application-ui .nav-label { display: block; max-width: 100%; overflow-wrap: normal; }
+  .application-ui .settings-section { padding-top: 28px; }
+  .application-ui .language-choice-copy strong { font-size: 24px; }
+  .application-ui:lang(pa-Arab) .auth-panel h1 { font-size: 34px; line-height: 1.9; max-width: none; }
+  .application-ui:lang(pa-Arab) .page-heading h1 { font-size: 38px; }
+  .application-ui:lang(pa-Arab) .nav-link { font-size: 11px; line-height: 2; min-height: 72px; }
+  .application-ui:lang(pa-Arab) .empty-copy h2 { font-size: 28px; }
+}
+@media (max-width: 350px) {
+  .application-ui .site-header { padding-inline: 16px; }
+  .application-ui .auth-layout { padding-inline: 24px; }
+  .application-ui .main-navigation { inset-inline: 8px; padding: 5px; }
+  .application-ui .nav-link { font-size: 9px; min-height: 68px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .application-ui *, .application-ui *::before, .application-ui *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+@media (forced-colors: active) {
+  .application-ui .button, .application-ui .field-control, .application-ui .nav-link.active { border: 1px solid ButtonText; }
+  .application-ui .nav-link.active { outline: 2px solid Highlight; outline-offset: -3px; }
+}
+
+.application-ui[dir="rtl"] .action-arrow,
+.application-ui[dir="rtl"] .text-link > svg,
+.application-ui[dir="rtl"] .guest-link > svg { transform: scaleX(-1); }
+/* A native radio group gives the three language modes keyboard support. */
+.application-ui .language-switch { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; padding: 3px; border: 1px solid var(--rule); }
+.application-ui .language-mode { position: relative; cursor: pointer; }
+.application-ui .language-mode > span { display: grid; place-items: center; min-height: 44px; padding-inline: 14px; font: 13px/1.4 'Manrope', sans-serif; transition: background-color 160ms, color 160ms; }
+.application-ui .language-mode > span:lang(pa-Arab) { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2; }
+.application-ui .language-mode:hover > span { background: var(--surface); }
+.application-ui .language-mode input:checked + span { background: var(--ink); color: var(--paper); }
+.application-ui .language-mode input:focus-visible + span { outline: 2px solid var(--clay); outline-offset: 3px; }
+@media (max-width: 480px) {
+  .application-ui .site-header { gap: 8px; padding-inline: 16px; }
+  .application-ui .site-header .brand { font-size: 28px; }
+  .application-ui .site-header .brand span { display: none; }
+  .application-ui .language-switch { gap: 0; padding: 2px; }
+  .application-ui .language-mode > span { font-size: 12px; padding-inline: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .application-ui .language-mode > span { transition: none; }
+}
+@media (forced-colors: active) {
+  .application-ui .language-mode input:checked + span { outline: 2px solid Highlight; outline-offset: -2px; }
+}

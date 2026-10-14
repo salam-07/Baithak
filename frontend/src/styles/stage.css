@@ -1,0 +1,402 @@
+/* The story deck: one story fills the screen, its actions in a rail beside it.
+
+   The height chain is deliberate and every link is definite, because a deck that
+   settles on a step needs steps that measure a screen. The shell sets an explicit
+   height on .app-content (workspace.css), the route wrapper and .feed-view take
+   their height from flex, the stage's grid row is minmax(0,1fr), and from there
+   100% resolves all the way down to the card. Break any link and the steps lose
+   their floor. */
+.application-ui.baithak-shell .feed-view {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(0, 1fr);
+  /* Row gap stays zero so an absent filter bar costs no space; the bar carries
+     its own bottom rhythm instead. */
+  gap: 0 clamp(12px, 1.6vw, 26px);
+  flex: 1 1 auto;
+  min-height: 0;
+  width: min(100%, 880px);
+  margin-inline: auto;
+}
+.application-ui.baithak-shell .feed-view > .feed-stage { grid-column: 1; grid-row: 2; }
+.application-ui.baithak-shell .feed-view > .feed-rail { grid-column: 2; grid-row: 2; }
+
+.application-ui.baithak-shell .feed-banner {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 20px;
+  padding-bottom: clamp(10px, 1.8vh, 18px);
+  margin-bottom: clamp(8px, 1.6vh, 16px);
+  border-bottom: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.application-ui.baithak-shell .feed-banner .text-link { font-size: 13px; }
+
+/* The scroller — the only scrolling surface in the feed. A step is at least a
+   screen tall, so a story that fits holds the screen to itself; a story that runs
+   longer makes a taller step for the stage to carry the reader through. Nothing
+   inside a step scrolls. Native gestures settle gently onto a post after a pause;
+   tall posts retain their full reading range.
+
+   `position: relative` is load-bearing rather than decorative: it makes the stage
+   the steps' offsetParent, so `step.offsetTop` is the scroll offset that brings
+   that step to the top and the rail buttons can aim at a step rather than at a
+   multiple of the stage's height. The stage carries no padding, so nothing sits
+   between the two.
+
+   No scrollbar: a track beside a full-bleed card is furniture in a surface built to
+   hold one story. The opened card keeps a hairline, because a reader several
+   screens into a story is owed their position. */
+.application-ui.baithak-shell .feed-stage {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+.application-ui.baithak-shell .feed-stage:focus-visible { outline: 2px solid var(--clay); outline-offset: -2px; }
+.application-ui.baithak-shell .feed-stage::-webkit-scrollbar { display: none; }
+
+/* The deck box is one screen tall; its steps overflow it and the stage, which
+   is the scroll container, picks that overflow up. */
+.application-ui.baithak-shell .feed-deck { height: 100%; list-style: none; margin: 0; padding: 0; }
+/* The step is a flex row so its card can be stretched to fill it, with a floor of
+   one screen so a short story does not leave the paper half-drawn. Above that floor
+   its height follows its content, which is what lets a long story extend past the
+   screen rather than being clipped or scrolled inside the card. */
+.application-ui.baithak-shell .feed-step { min-height: 100%; display: flex; padding-block: clamp(8px, 1.8vh, 20px); }
+
+/* The card. Square-edged like everything in this world; a warm hairline and one
+   downward-offset shadow are what make it a leaf of paper rather than a pane.
+
+   It does not scroll, at any width, and has no overflow of its own. A card that
+   scrolled inside the stage was a second scroller under the cursor: the wheel
+   belonged to the card until it ran out and only then chained to the deck — when it
+   chained at all — which is what made desktop scrolling catch on a long story.
+   Instead the card grows and the step grows with it, and the stage is the one
+   surface that moves. The opened card in the overlay is the exception, and asks for
+   its own scroll where it is styled.
+
+   `flex: 1 1 auto` fills the step's width; `height: auto` keeps the cross size open
+   so the step's `align-items: stretch` is what gives a short story the full screen. */
+.application-ui.baithak-shell .feed-card {
+  flex: 1 1 auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  overflow-wrap: anywhere;
+  padding-block: clamp(26px, 5vh, 58px);
+  padding-inline: clamp(22px, 4.6vw, 64px);
+  background: var(--field);
+  border: 1px solid var(--rule);
+  box-shadow: 0 20px 42px -26px #302b2340, 0 2px 6px -4px #302b231f;
+}
+/* Only the story cards open. The loading, failed and empty cards are steps too, and
+   a pointer cursor on a card that does nothing is a small lie. */
+.application-ui.baithak-shell .feed-deck .feed-card[data-open] { cursor: pointer; }
+
+/* Auto margins do two jobs. Block: they centre the body when it fits and,
+   because auto margins resolve to zero once free space goes negative, let the body
+   start at the top of a card that has outgrown the screen instead of clipping its
+   first line. Inline: they centre the 36rem measure in a card that is wider than
+   it, which `align-items: stretch` alone would leave flush against the padding. */
+.application-ui.baithak-shell .feed-card-body { margin: auto; width: 100%; max-width: 36rem; }
+
+.application-ui.baithak-shell .feed-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 20px;
+  padding-bottom: clamp(14px, 2.2vh, 22px);
+  margin-bottom: clamp(22px, 4vh, 40px);
+  border-bottom: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* The title is a heading holding a button, not a link: the card carries exactly one
+   control with the story's name, so the keyboard has one stop here rather than two
+   ways to do the same thing. Its type is the heading's own, so it reads as the title
+   it is. */
+.application-ui.baithak-shell .feed-card-title { font-size: clamp(31px, 3.3vw, 50px); line-height: 1.1; letter-spacing: -.032em; }
+.application-ui.baithak-shell .feed-card-title button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  line-height: inherit;
+  text-align: start;
+}
+.application-ui.baithak-shell .feed-card-title button:hover,
+.application-ui.baithak-shell .feed-card-title button:focus-visible { color: var(--clay); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .14em; }
+
+.application-ui.baithak-shell .feed-card-text { margin-top: clamp(16px, 2.6vh, 28px); font-size: 17px; line-height: 1.9; white-space: pre-line; }
+.application-ui.baithak-shell .feed-card .story-keywords { margin-top: clamp(14px, 2.2vh, 22px); }
+.application-ui.baithak-shell .feed-card .story-keywords a { font-size: 13px; }
+/* The invitation is drawn, not linked: the whole card is the target. */
+.application-ui.baithak-shell .feed-card-open { display: inline-flex; align-items: center; gap: 10px; margin-top: clamp(18px, 3.2vh, 36px); color: var(--clay); font-size: 14px; font-weight: 600; }
+.application-ui.baithak-shell .feed-card-open svg { width: 17px; transition: transform 180ms var(--ease); }
+.application-ui.baithak-shell .feed-deck .feed-card:hover .feed-card-open svg { transform: translateX(3px); }
+
+/* The one authored moment: the card's body settles as it becomes the current step. */
+@keyframes feed-settle { from { opacity: .55; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.application-ui.baithak-shell .feed-step[data-current="true"] .feed-card-body { animation: feed-settle 480ms var(--ease) both; }
+
+/* Shahmukhi keeps its own direction, size and leading wherever it appears. */
+.application-ui.baithak-shell .feed-card-title[lang="pa-Arab"] { font-family: inherit; font-size: 30px; line-height: 2.1; letter-spacing: normal; }
+.application-ui.baithak-shell .feed-card-text[lang="pa-Arab"] { font-family: 'Noto Nastaliq Urdu', serif; font-size: 21px; line-height: 2.4; letter-spacing: normal; }
+
+/* States reuse the surfaces the reader already knows, on the card's paper. */
+.application-ui.baithak-shell .feed-card .content-empty { padding-block: 0; }
+.application-ui.baithak-shell .feed-card .content-empty h2 { font-size: clamp(26px, 2.6vw, 34px); }
+.application-ui.baithak-shell .feed-card .content-status { padding-block: 0; }
+.application-ui.baithak-shell .feed-state-loading { display: flex; flex-direction: column; align-items: center; gap: 18px; color: var(--muted); font-size: 14px; }
+.application-ui.baithak-shell .feed-state-loading .busy-mark { width: 22px; height: 22px; border-width: 2px; color: var(--clay); }
+.application-ui.baithak-shell .feed-ends h2 { font-size: clamp(26px, 2.6vw, 34px); }
+.application-ui.baithak-shell .feed-ends > p { margin-top: 14px; color: var(--muted); font-size: 15px; line-height: 1.85; max-width: 46ch; }
+.application-ui.baithak-shell .feed-ends-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: clamp(22px, 3.4vh, 34px); }
+.application-ui.baithak-shell .feed-ends-actions .button { min-height: 46px; }
+.application-ui.baithak-shell .feed-ends .content-status { margin-top: 20px; }
+
+/* The rail: circles, because the brief asks for them, on a world of squares. */
+.application-ui.baithak-shell .feed-rail {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.application-ui.baithak-shell .feed-action-item { display: grid; justify-items: center; gap: 5px; }
+.application-ui.baithak-shell .feed-comment { position: relative; }
+.application-ui.baithak-shell .feed-action {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  background: var(--field);
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 180ms, border-color 180ms, background-color 180ms, transform 180ms var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.application-ui.baithak-shell .feed-action svg { width: 21px; height: 21px; }
+@media (hover: hover) and (pointer: fine) {
+  .application-ui.baithak-shell .feed-action:hover:not(:disabled) { border-color: var(--clay); color: var(--clay); }
+}
+.application-ui.baithak-shell .feed-action:active:not(:disabled) { transform: scale(.93); }
+.application-ui.baithak-shell .feed-action:focus-visible { outline-offset: 3px; }
+/* Liked fills the heart, not the control. Filling the circle as well made the one
+   reaction that has a state look like a different kind of button from the Comment
+   circle beside it, when they are the same kind of button — and the filled heart
+   already says it, so the background was saying it a second time. The colour stays
+   the accent, carried by the glyph rather than by the field behind it, so the
+   state is still legible at a glance.
+   The fill lands on the `svg` rather than the `path` because it has to beat the
+   `fill="none"` the icon sets as a presentation attribute, and CSS always beats a
+   presentation attribute. `currentColor` then fills the glyph with the button's
+   own colour, so the two can never drift apart. */
+.application-ui.baithak-shell .feed-action[aria-pressed="true"] { color: var(--clay); }
+.application-ui.baithak-shell .feed-action[aria-pressed="true"] svg { fill: currentColor; }
+.application-ui.baithak-shell .feed-action[aria-pressed="true"]:focus-visible { outline-color: var(--ink); }
+.application-ui.baithak-shell .feed-action:disabled { opacity: 1; color: #a99c87; border-color: #e2d8c6; cursor: default; }
+.application-ui.baithak-shell .feed-action-count { color: var(--muted); font-size: 12px; line-height: 1; font-variant-numeric: tabular-nums; }
+.application-ui.baithak-shell .feed-rail-rule { width: 26px; height: 1px; background: var(--rule); }
+
+/* The panel says plainly what is not built yet rather than showing an empty box. */
+.application-ui.baithak-shell .feed-panel {
+  position: absolute;
+  z-index: 5;
+  inset-inline-end: calc(100% + 14px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 268px;
+  padding: 20px 22px 14px;
+  background: var(--field);
+  border: 1px solid var(--rule);
+  box-shadow: 0 18px 40px -24px #302b2345, 0 2px 6px -4px #302b2326;
+}
+.application-ui.baithak-shell .feed-panel h2 { font: 600 12px/1.6 'Manrope', sans-serif; letter-spacing: .07em; text-transform: uppercase; }
+.application-ui.baithak-shell .feed-panel p { margin-top: 10px; color: var(--muted); font-size: 13px; line-height: 1.85; }
+.application-ui.baithak-shell .feed-panel .text-button { margin-top: 8px; font-size: 13px; }
+.application-ui.baithak-shell:lang(pa-Arab) .feed-panel h2 { font-family: 'Noto Nastaliq Urdu', serif; font-size: 15px; line-height: 2.2; letter-spacing: normal; text-transform: none; }
+.application-ui.baithak-shell:lang(pa-Arab) .feed-banner,
+.application-ui.baithak-shell:lang(pa-Arab) .feed-card-head,
+.application-ui.baithak-shell:lang(pa-Arab) .feed-action-count,
+.application-ui.baithak-shell:lang(pa-Arab) .feed-ends > p { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.3; letter-spacing: normal; }
+
+/* The card, opened: a portal on document.body, above the whole shell.
+
+   The root is both the scrim and the fade. One element carries the black and the
+   opacity, so there is no second layer to keep in step with the first, and the
+   shell's header, its sidebar and the fixed mobile navigation are all simply
+   underneath it. `application-ui` and `baithak-shell` are on the palette, the
+   Nastaliq rules and every card and reading rule in content.css. */
+.application-ui.baithak-shell.feed-overlay {
+  position: fixed;
+  z-index: 200;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  background: #181511c7;
+  overscroll-behavior: contain;
+}
+
+/* Flex with the card stretched, rather than grid with the card sized.
+
+   The card has to end up shorter than what is inside it, or `overflow-y` means
+   nothing. Sizing it from a percentage chain — a capped height on the shell, which
+   a percentage on the item resolved against, inside a row the grid sized from its
+   content — left the card exactly as tall as its story and with nothing to scroll.
+   A stretched flex item is given its height outright by the line it is in, with no
+   percentage anywhere in the chain, so the card is the height of the shell full
+   stop and the overflow has somewhere to go. */
+.application-ui.baithak-shell .feed-overlay-shell {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: clamp(12px, 1.6vw, 26px);
+  width: 100%;
+  max-width: 940px;
+  height: 100%;
+  max-height: 900px;
+  min-height: 0;
+}
+.application-ui.baithak-shell .feed-overlay-shell > .feed-rail { flex: 0 0 auto; }
+
+/* The card is a feed card: same paper, same hairline, same shadow, same padding.
+   All that changes is that it is given the room, and that it keeps a hairline
+   scrollbar — a reader deep into a story is owed their position. So this is the
+   one card that does scroll, and the reason the base card does not: out here the
+   card is the whole surface, and there is no deck behind it for a wheel to reach.
+
+   `min-height: 0` is what lets the card stop at the shell's height instead of being
+   floored at its own content; without it the card would push the shell taller than
+   the viewport and the whole portal would scroll instead of the card. */
+.application-ui.baithak-shell .feed-overlay-card {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule) transparent;
+}
+.application-ui.baithak-shell .feed-overlay-card::-webkit-scrollbar { display: block; width: 5px; }
+.application-ui.baithak-shell .feed-overlay-card::-webkit-scrollbar-track { background: transparent; }
+.application-ui.baithak-shell .feed-overlay-card::-webkit-scrollbar-thumb { background: var(--rule); }
+.application-ui.baithak-shell .feed-overlay-card .feed-card-body { max-width: 40rem; }
+/* Focus lands on the card when it opens so a screen reader starts at its top; the
+   ring belongs on the controls the reader moves to next, not on the surface. */
+.application-ui.baithak-shell .feed-overlay-card:focus { outline: none; }
+.application-ui.baithak-shell .feed-overlay-title { font-size: clamp(31px, 3.3vw, 50px); line-height: 1.1; letter-spacing: -.032em; }
+/* `inherit` rather than a font stack of its own, the same as the card's title: the
+   shell under this portal carries Nastaliq when the interface is Shahmukhi, and a
+   heading that names its own family would override that inheritance and leave the
+   title in a serif with no Arabic glyphs. */
+.application-ui.baithak-shell .feed-overlay-title[lang="pa-Arab"] { font-family: inherit; font-size: 30px; line-height: 2.1; letter-spacing: normal; }
+.application-ui.baithak-shell .feed-overlay-card .story-keywords { margin-top: clamp(14px, 2.2vh, 22px); }
+.application-ui.baithak-shell .feed-overlay-card .story-keywords a { font-size: 13px; }
+
+@media (max-width: 680px) {
+  /* The rail floats over the same grid row as the cards, with no backing strip. */
+  .application-ui.baithak-shell .feed-view { --feed-rail-h: 80px; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+  .application-ui.baithak-shell .feed-view > .feed-stage { grid-column: 1; grid-row: 2; }
+  .application-ui.baithak-shell .feed-view > .feed-rail { grid-column: 1; grid-row: 2; align-self: end; }
+  .application-ui.baithak-shell .feed-rail { isolation: isolate; z-index: 2; flex-direction: row; gap: clamp(8px, 2.5vw, 14px); padding: 16px 8px; min-height: var(--feed-rail-h); background: transparent; pointer-events: none; }
+  .application-ui.baithak-shell .feed-rail .feed-action,
+  .application-ui.baithak-shell .feed-rail .feed-panel { pointer-events: auto; }
+  /* A continuous cream fade protects the controls while stories scroll underneath. */
+  .application-ui.baithak-shell .feed-rail::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset-inline: 0;
+    bottom: 0;
+    height: calc(var(--feed-rail-h) + 40px);
+    background: linear-gradient(to top, var(--paper) 0%, color-mix(in srgb, var(--paper) 88%, transparent) 35%, color-mix(in srgb, var(--paper) 48%, transparent) 65%, color-mix(in srgb, var(--paper) 0%, transparent) 100%);
+    pointer-events: none;
+  }
+  .application-ui.baithak-shell .feed-view > .feed-rail::before { inset-inline: calc((100% - 100vw) / 2); }
+  .application-ui.baithak-shell .feed-action-item { display: flex; align-items: center; gap: 6px; }
+  .application-ui.baithak-shell .feed-action { width: 48px; height: 48px; }
+  .application-ui.baithak-shell .feed-rail .feed-action {
+    flex-shrink: 0;
+    background: var(--field);
+    border-color: var(--rule);
+    box-shadow: none;
+    touch-action: manipulation;
+  }
+  .application-ui.baithak-shell .feed-rail .feed-action[aria-pressed="true"],
+  .application-ui.baithak-shell .feed-rail .feed-action[aria-expanded="true"] {
+    color: var(--clay);
+    border-color: var(--clay);
+    background: var(--field);
+  }
+  .application-ui.baithak-shell .feed-rail .feed-action:disabled {
+    background: color-mix(in srgb, var(--field) 50%, transparent);
+    border-color: #e2d8c6;
+  }
+  .application-ui.baithak-shell .feed-rail .feed-action:focus-visible { outline: 2px solid var(--clay); outline-offset: 4px; }
+  .application-ui.baithak-shell .feed-rail .feed-action-count { min-width: 2ch; text-align: center; font-weight: 600; text-shadow: none; }
+  @media (hover: hover) and (pointer: fine) {
+    .application-ui.baithak-shell .feed-rail .feed-action:hover:not(:disabled) { border-color: var(--clay); background: var(--field); }
+  }
+  .application-ui.baithak-shell .feed-rail-rule { width: 1px; height: 26px; }
+  .application-ui.baithak-shell .feed-comment { position: static; }
+  .application-ui.baithak-shell .feed-panel { inset-inline: 0; inset-inline-end: auto; top: auto; bottom: calc(100% + 12px); transform: none; width: auto; }
+  .application-ui.baithak-shell .feed-card { padding-block: clamp(24px, 4.5vh, 44px); padding-inline: clamp(20px, 6vw, 30px); }
+  .application-ui.baithak-shell .feed-card-title { font-size: clamp(28px, 7.6vw, 38px); }
+  .application-ui.baithak-shell .feed-card-title[lang="pa-Arab"] { font-size: 26px; }
+  .application-ui.baithak-shell .feed-card-text { font-size: 16px; }
+  .application-ui.baithak-shell .feed-card-text[lang="pa-Arab"] { font-size: 20px; }
+
+  /* The deck is laid out the same way here as on a wide screen — one scroller, one
+     step per story, no snap, no card that scrolls. The step and card rules that used
+     to live in this block are now the base rules, because a nested scroller is a
+     worse trade on a desktop wheel than it ever was on a thumb.
+
+     The story scrolls beneath the controls; gaps in the rail pass gestures through. */
+  .application-ui.baithak-shell .feed-stage { z-index: 1; }
+
+  /* Extra trailing space lets the last links scroll clear of the floating rail. */
+  .application-ui.baithak-shell .feed-stage { scroll-padding-bottom: var(--feed-rail-h); }
+  .application-ui.baithak-shell .feed-step:last-child { padding-bottom: var(--feed-rail-h); }
+
+  /* The opened reader carries the same transparent overlay. */
+  .application-ui.baithak-shell.feed-overlay { padding: max(10px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left)); }
+  .application-ui.baithak-shell .feed-overlay-shell { --feed-rail-h: 80px; position: relative; flex-direction: column; gap: 0; max-width: none; max-height: none; background: var(--field); }
+  .application-ui.baithak-shell .feed-overlay-card { padding-bottom: calc(var(--feed-rail-h) + 28px); scroll-padding-bottom: var(--feed-rail-h); z-index: 1; }
+  .application-ui.baithak-shell .feed-overlay-shell > .feed-rail { position: absolute; inset-inline: 0; bottom: 0; }
+  .application-ui.baithak-shell .feed-overlay-title { font-size: clamp(28px, 7.6vw, 38px); }
+  .application-ui.baithak-shell .feed-overlay-title[lang="pa-Arab"] { font-size: 26px; }
+}
+
+/* Motion is a flourish on top of an element's own final state everywhere in this
+   feature — the glide and the grow both end where the deck would have put them
+   anyway — so the guard can remove all of it without leaving anything unmoved.
+   There is nothing to guard here besides the transition on the invitation's arrow,
+   which is a colour change rather than a movement: the scrim's fade and the card's
+   grow are both driven from StoryReader, which asks the same question of
+   `prefers-reduced-motion` before it starts them. */
+
+
+@media (prefers-reduced-motion: reduce) {
+  .application-ui.baithak-shell .feed-rail .feed-action { transition: none; }
+  .application-ui.baithak-shell .feed-rail .feed-action:active:not(:disabled) { transform: none; }
+}

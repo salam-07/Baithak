@@ -1,0 +1,83 @@
+/* Dictionary slips share the tooltip's paper, ink and typography. */
+.application-ui.baithak-shell { --definition-paper: #faf6ed; --definition-rule: #b9aa90; }
+.application-ui.baithak-shell .discovery-page { padding-top: 2px; }
+.application-ui.baithak-shell .keywords-page { max-width: 1040px; }
+.application-ui.baithak-shell .discovery-page .page-heading { gap: 20px; padding-bottom: 24px; }
+.application-ui.baithak-shell .discovery-page .page-heading h1 { font-size: clamp(36px, 4vw, 48px); line-height: 1.15; }
+.application-ui.baithak-shell .discovery-page .page-heading > .text-link { font-size: 12px; flex-shrink: 0; }
+.application-ui.baithak-shell .discovery-intro { max-width: 60ch; margin: 22px 0 30px; color: var(--muted); font-size: 15px; line-height: 1.8; }
+.application-ui.baithak-shell .discovery-search { margin: 0 0 28px; }
+.application-ui.baithak-shell .discovery-search > div { gap: 0; }
+.application-ui.baithak-shell .discovery-search .search-field { display: flex; align-items: center; flex: 1; min-width: 0; border: 1px solid var(--definition-rule); background: var(--definition-paper); padding-inline-start: 16px; transition: border-color 160ms ease-out; }
+.application-ui.baithak-shell .search-field > svg { width: 18px; flex-shrink: 0; color: var(--muted); }
+.application-ui.baithak-shell .discovery-search .search-field input { border: 0; background: transparent; padding: 14px 12px; font-size: 15px; }
+.application-ui.baithak-shell .search-field:focus-within { border-color: var(--clay); outline: 1px solid var(--clay); outline-offset: -1px; }
+.application-ui.baithak-shell .search-field input:focus-visible { outline-offset: -4px; }
+.application-ui.baithak-shell .discovery-search .button { border-color: var(--olive); background: var(--olive); color: var(--paper); margin-inline-start: -1px; padding-inline: 24px; }
+.application-ui.baithak-shell .discovery-search .button:hover { background: var(--clay); border-color: var(--clay); }
+.application-ui.baithak-shell .directory-note { margin: 0 0 18px; font-size: 12px; line-height: 1.8; color: var(--muted); }
+.application-ui.baithak-shell .keyword-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 18px; }
+.application-ui.baithak-shell .keyword-card { display: flex; flex-direction: column; min-width: 0; padding: 25px 24px 18px; background: var(--definition-paper); border: 1px solid var(--definition-rule); text-decoration: none; color: var(--ink); transition: border-color 180ms ease-out, background-color 180ms ease-out; }
+.application-ui.baithak-shell .keyword-card h2 { margin: 0; font: 500 32px/1.2 'Bodoni Moda', Georgia, serif; letter-spacing: -.02em; overflow-wrap: anywhere; }
+.application-ui.baithak-shell .keyword-card-category { margin: 8px 0 18px; font-size: 12px; color: var(--muted); }
+.application-ui.baithak-shell .keyword-card-definition { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; margin: 0 0 24px; font: 400 14px/1.8 'Manrope', sans-serif; overflow-wrap: anywhere; }
+.application-ui.baithak-shell .keyword-card-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: auto; padding-top: 14px; border-top: 1px solid var(--rule); color: var(--clay); font-size: 12px; }
+.application-ui.baithak-shell .keyword-card-foot svg { width: 18px; height: 18px; transition: transform 220ms cubic-bezier(.16,1,.3,1); }
+.application-ui.baithak-shell .keyword-card:focus-visible { outline: 2px solid var(--clay); outline-offset: 4px; }
+@media (hover: hover) {
+  .application-ui.baithak-shell .keyword-card:hover { border-color: var(--clay); background: #f5ecdb; }
+  .application-ui.baithak-shell .keyword-card:hover h2 { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; }
+  .application-ui.baithak-shell .keyword-card:hover .keyword-card-foot svg { transform: translateX(4px); }
+  .application-ui.baithak-shell:dir(rtl) .keyword-card:hover .keyword-card-foot svg { transform: translateX(-4px) rotate(180deg); }
+}
+.application-ui.baithak-shell .search-context { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; border-bottom: 1px solid var(--rule); padding-bottom: 18px; font-size: 13px; overflow-wrap: anywhere; }
+.application-ui.baithak-shell .search-context p { min-width: 0; }
+.application-ui.baithak-shell .search-context .text-link { flex-shrink: 0; }
+.application-ui.baithak-shell .search-context svg { width: 14px; }
+.application-ui.baithak-shell .search-invitation { padding: 42px 0; border-top: 1px solid var(--rule); max-width: 56ch; }
+.application-ui.baithak-shell .search-invitation > svg { color: var(--clay); width: 30px; height: 30px; margin-bottom: 22px; }
+.application-ui.baithak-shell :is(.search-invitation,.discovery-empty) h2 { margin: 0; font: 500 30px/1.35 'Bodoni Moda', Georgia, serif; }
+.application-ui.baithak-shell :is(.search-invitation,.discovery-empty) p { margin: 16px 0 24px; font-size: 14px; line-height: 1.9; color: var(--muted); }
+.application-ui.baithak-shell .discovery-empty { padding: 30px 0; }
+.application-ui.baithak-shell .search-page .story-card { padding-block: 30px; }
+.application-ui.baithak-shell .search-page .story-open p { max-width: 65ch; color: var(--muted); }
+.application-ui.baithak-shell .profile-page .profile-intro { padding-block: 36px; }
+.application-ui.baithak-shell .profile-page .account-identity { align-items: center; gap: 22px; }
+.application-ui.baithak-shell .profile-page .account-identity > div { min-width: 0; }
+.application-ui.baithak-shell .profile-page .account-identity h2 { overflow-wrap: anywhere; }
+.application-ui.baithak-shell .profile-page .account-identity p { overflow-wrap: anywhere; font-size: 13px; margin-top: 6px; color: var(--muted); }
+.application-ui.baithak-shell .profile-page .avatar { width: 64px; height: 72px; flex-shrink: 0; border-radius: 0; background: var(--surface); color: var(--clay); font: 500 40px/1 'Bodoni Moda', Georgia, serif; }
+.application-ui.baithak-shell .profile-page .profile-setting { padding-block: 24px; }
+.application-ui.baithak-shell .profile-page .profile-setting + .profile-setting { border-top: 0; }
+.application-ui.baithak-shell .profile-page .profile-setting > span { gap: 8px; }
+.application-ui.baithak-shell .profile-page .profile-setting span span { line-height: 1.8; }
+.application-ui.baithak-shell .profile-language { display: inline-block; margin-inline-start: 8px; color: var(--ink); }
+.application-ui.baithak-shell .profile-writing { border-bottom: 1px solid var(--rule); }
+.application-ui.baithak-shell .profile-writing + .profile-setting { border-top: 0; }
+.application-ui.baithak-shell .profile-writing > summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; cursor: pointer; padding-block: 24px; list-style: none; font-size: 14px; font-weight: 600; }
+.application-ui.baithak-shell .profile-writing > summary::-webkit-details-marker { display: none; }
+.application-ui.baithak-shell .profile-writing > summary svg { width: 18px; color: var(--clay); transition: transform 180ms ease-out; }
+.application-ui.baithak-shell .profile-writing[open] > summary svg { transform: rotate(180deg); }
+.application-ui.baithak-shell .profile-writing > summary:focus-visible { outline: 2px solid var(--clay); outline-offset: 4px; }
+.application-ui.baithak-shell .translation-page .empty-state { padding-block: 56px; }
+.application-ui.baithak-shell :is(.keyword-card h2,.keyword-card-definition)[lang="pa-Arab"] { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.3; letter-spacing: normal; }
+.application-ui.baithak-shell .keyword-card-definition[lang="pa-Arab"] { font-size: 18px; }
+.application-ui.baithak-shell:lang(pa-Arab) .discovery-page :is(h1,h2,.discovery-intro,.directory-note,.keyword-card-category,.keyword-card-foot,.search-context,.profile-writing summary) { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.2; letter-spacing: normal; }
+.application-ui.baithak-shell:lang(pa-Arab) .keyword-card h2[lang="en"], .application-ui.baithak-shell:lang(pa-Arab) .keyword-card h2[lang="pa-Latn"] { font-family: 'Bodoni Moda', Georgia, serif; line-height: 1.2; }
+.application-ui.baithak-shell:dir(rtl) .keyword-card-foot svg { transform: rotate(180deg); }
+@media (max-width: 680px) {
+  .application-ui.baithak-shell .discovery-page .page-heading { align-items: baseline; padding-bottom: 20px; }
+  .application-ui.baithak-shell .discovery-page .page-heading h1 { font-size: 36px; }
+  .application-ui.baithak-shell .discovery-intro { margin: 18px 0 24px; font-size: 14px; }
+  .application-ui.baithak-shell .keyword-grid { gap: 14px; }
+  .application-ui.baithak-shell .keyword-card { padding: 23px 22px 18px; }
+  .application-ui.baithak-shell .search-context { flex-wrap: wrap; gap: 4px 16px; }
+  .application-ui.baithak-shell .nav-link { font-size: 9px; letter-spacing: .025em; }
+  .application-ui.baithak-shell .profile-page .account-identity { gap: 16px; }
+  .application-ui.baithak-shell .profile-page .avatar { width: 52px; height: 62px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .application-ui.baithak-shell :is(.keyword-card,.keyword-card-foot svg,.profile-writing > summary svg) { transition: none; }
+  .application-ui.baithak-shell .keyword-card:hover .keyword-card-foot svg { transform: none; }
+  .application-ui.baithak-shell:dir(rtl) .keyword-card:hover .keyword-card-foot svg { transform: rotate(180deg); }
+}

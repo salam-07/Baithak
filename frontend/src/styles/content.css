@@ -1,0 +1,66 @@
+/* Reading and writing inherit the app's paper, rules, and restrained controls. */
+.application-ui.baithak-shell .content-intro { padding-block: 22px; color: var(--muted); font-size: 14px; line-height: 1.85; }
+.application-ui.baithak-shell .content-note { color: var(--muted); font-size: 12px; line-height: 1.8; margin-block: 8px 18px; }
+.application-ui.baithak-shell .content-status { padding-block: 24px; color: var(--muted); font-size: 14px; }
+.application-ui.baithak-shell .content-status .button { margin-top: 12px; }
+.application-ui.baithak-shell .content-empty { padding-block: 40px; }
+.application-ui.baithak-shell .content-empty h2 { font-size: 28px; }
+.application-ui.baithak-shell .content-empty p { margin-block: 14px 24px; color: var(--muted); font-size: 14px; }
+.application-ui.baithak-shell .content-empty > a { margin-inline-end: 24px; }
+.application-ui.baithak-shell .story-card { padding-block: 28px; border-bottom: 1px solid var(--rule); overflow-wrap: anywhere; }
+.application-ui.baithak-shell .story-meta, .application-ui.baithak-shell .reader-byline { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 12px; color: var(--muted); margin-bottom: 14px; }
+.application-ui.baithak-shell .story-open { display: block; text-decoration: none; }
+.application-ui.baithak-shell .story-open h2 { font-size: 29px; line-height: 1.35; text-align: start; }
+.application-ui.baithak-shell .story-open:hover h2 { color: var(--clay); text-decoration: underline; text-decoration-thickness: 1px; }
+.application-ui.baithak-shell .story-open p { margin-top: 14px; font-size: 15px; line-height: 1.9; white-space: pre-line; }
+.application-ui.baithak-shell .story-keywords { display: flex; flex-wrap: wrap; gap: 4px 18px; margin-top: 16px; }
+.application-ui.baithak-shell .story-keywords a { display: inline-flex; align-items: center; min-height: 44px; color: var(--clay); font-size: 12px; overflow-wrap: anywhere; }
+.application-ui.baithak-shell .story-card > .text-link { font-size: 12px; margin-top: 4px; }
+.application-ui.baithak-shell .list-footer { padding-block: 26px; color: var(--muted); font-size: 12px; }
+.application-ui.baithak-shell .filter-line { display: flex; gap: 20px; align-items: center; overflow-wrap: anywhere; }
+.application-ui.baithak-shell .content-search { margin-block: 4px 26px; }
+.application-ui.baithak-shell .content-search label, .application-ui.baithak-shell .story-form label { display: block; font-size: 13px; margin-bottom: 8px; font-weight: 600; }
+.application-ui.baithak-shell .content-search > div { display: flex; gap: 10px; }
+.application-ui.baithak-shell .content-search input, .application-ui.baithak-shell .story-form input, .application-ui.baithak-shell .story-form textarea, .application-ui.baithak-shell .story-form select { width: 100%; min-width: 0; padding: 12px; border: 1px solid var(--rule); border-radius: 0; background: var(--field); color: var(--ink); font: inherit; caret-color: var(--clay); }
+.application-ui.baithak-shell .content-search input:focus, .application-ui.baithak-shell .story-form :is(input,textarea,select):focus { border-color: var(--clay); }
+.application-ui.baithak-shell .content-tabs { display: flex; gap: 26px; border-bottom: 1px solid var(--rule); }
+.application-ui.baithak-shell .content-tabs a { padding-block: 12px; font-size: 14px; text-decoration: none; border-bottom: 2px solid transparent; }
+.application-ui.baithak-shell .content-tabs a[aria-current] { border-color: var(--olive); color: var(--olive); font-weight: 600; }
+.application-ui.baithak-shell .word-row { display: flex; justify-content: space-between; gap: 24px; align-items: baseline; border-bottom: 1px solid var(--rule); padding-block: 23px; text-decoration: none; }
+.application-ui.baithak-shell .word-row > span:first-child { font-size: 20px; overflow-wrap: anywhere; }
+.application-ui.baithak-shell .word-row:hover > span:first-child { color: var(--clay); text-decoration: underline; }
+.application-ui.baithak-shell .word-count { font-size: 12px; color: var(--muted); flex-shrink: 0; }
+.application-ui.baithak-shell .word-notes { margin-block: 28px; white-space: pre-line; font-size: 16px; line-height: 1.9; overflow-wrap: anywhere; }
+.application-ui.baithak-shell .word-relations { margin-block: 30px; }
+.application-ui.baithak-shell .word-relations h2 { font: 600 14px/1.7 'Manrope', sans-serif; }
+.application-ui.baithak-shell .word-sources { color: var(--muted); font-size: 13px; }
+.application-ui.baithak-shell summary { min-height: 44px; padding-block: 12px; }
+.application-ui.baithak-shell .section-title { margin-top: 40px; font-size: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--rule); }
+.application-ui.baithak-shell .reader-byline { margin-block: 22px; }
+.application-ui.baithak-shell .story-body { font-size: 18px; line-height: 2; white-space: pre-wrap; overflow-wrap: anywhere; margin-block: 30px; }
+.application-ui.baithak-shell .reader-versions { display: flex; gap: 12px; flex-wrap: wrap; }
+.application-ui.baithak-shell .reader-versions button { min-height: 44px; border: 1px solid var(--rule); background: transparent; padding: 8px 14px; }
+.application-ui.baithak-shell .reader-versions button[aria-pressed=true] { background: var(--surface); border-color: var(--olive); }
+.application-ui.baithak-shell .reader-actions { display: flex; flex-wrap: wrap; gap: 24px; padding-block: 24px; border-top: 1px solid var(--rule); margin-top: 28px; }
+.application-ui.baithak-shell .reader-actions button[aria-pressed=true] { background: var(--surface); color: var(--olive); }
+.application-ui.baithak-shell .story-form label:not(:first-child) { margin-top: 26px; }
+.application-ui.baithak-shell .story-form select { width: auto; max-width: 100%; min-height: 48px; }
+.application-ui.baithak-shell .story-form textarea { resize: vertical; line-height: 1.9; min-height: 280px; }
+.application-ui.baithak-shell .publish-note { margin-top: 28px; color: var(--muted); font-size: 13px; line-height: 1.9; }
+.application-ui.baithak-shell .composer-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+.application-ui.baithak-shell .save-status { font-size: 12px; color: var(--olive); margin-top: 16px; }
+.application-ui.baithak-shell .content-error { color: var(--error); margin-top: 16px; font-size: 14px; }
+.application-ui.baithak-shell .my-writing { margin-top: 40px; border-top: 1px solid var(--rule); }
+.application-ui.baithak-shell .story-open[lang=pa-Arab], .application-ui.baithak-shell .story-body[lang=pa-Arab], .application-ui.baithak-shell .word-notes[lang=pa-Arab], .application-ui.baithak-shell .story-form [lang=pa-Arab] { font-family: 'Noto Nastaliq Urdu', serif; font-size: 20px; line-height: 2.4; letter-spacing: normal; }
+.application-ui.baithak-shell .story-open[lang=pa-Arab] h2 { font-family: inherit; line-height: 2.2; letter-spacing: normal; }
+.application-ui.baithak-shell .story-open[lang=pa-Arab] p { font-size: 20px; line-height: 2.4; }
+.application-ui.baithak-shell:lang(pa-Arab) :is(.word-relations h2,.story-form label,.content-intro,.content-note,.publish-note,.word-count,.save-status,.content-status,.content-tabs a,.story-keywords a) { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.4; letter-spacing: normal; }
+.application-ui.baithak-shell .page-heading h1 { overflow-wrap: anywhere; }
+@media (max-width: 680px) {
+  .application-ui.baithak-shell .page-heading { flex-wrap: wrap; gap: 8px 16px; }
+  .application-ui.baithak-shell .story-open h2 { font-size: 26px; }
+  .application-ui.baithak-shell .story-body { font-size: 16px; }
+  .application-ui.baithak-shell .word-row { gap: 12px; }
+  .application-ui.baithak-shell .word-row > span:first-child { font-size: 18px; }
+}
+.application-ui.baithak-shell .page-heading h1[lang=pa-Arab] { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.2; letter-spacing: normal; }

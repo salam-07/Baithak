@@ -1,0 +1,174 @@
+/* Keep the introduction and form centered in the available viewport. */
+.application-ui .auth-layout {
+  min-height: calc(100svh - var(--header-height));
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 96px);
+  padding: 24px clamp(24px, 7vw, 112px);
+  direction: ltr;
+}
+.application-ui .auth-intro {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  align-self: stretch;
+  width: 100%;
+  min-width: 0;
+  text-align: center;
+}
+.application-ui .auth-intro h1 {
+  max-width: 10ch;
+  font-size: clamp(48px, 5.5vw, 80px);
+  line-height: 1.08;
+  letter-spacing: -.035em;
+}
+.application-ui .auth-watermark {
+  display: block;
+  width: min(82vw, 1180px);
+  inset-inline-end: auto;
+  left: -10vw;
+  top: auto;
+  bottom: -13vw;
+  transform: rotate(-8deg);
+  color: #e5dac6;
+}
+.application-ui .auth-panel { width: min(100%, 420px); padding: 0; }
+.application-ui .auth-route-nav { margin-bottom: 24px; }
+.application-ui .auth-panel .field { margin-bottom: 16px; }
+.application-ui .auth-panel .field label { margin-bottom: 2px; }
+.application-ui .auth-panel .field input { min-height: 44px; padding-block: 4px 8px; font-size: 18px; }
+.application-ui .auth-panel .field-prefix { padding-top: 4px; font-size: 18px; }
+.application-ui .auth-panel .field-hint { margin-top: 4px; line-height: 1.5; }
+.application-ui .auth-panel .optional-details { margin-top: -4px; margin-bottom: 8px; }
+.application-ui .auth-panel .optional-details summary { min-height: 44px; align-content: center; padding-block: 8px; }
+.application-ui .auth-panel .optional-details .field { margin-top: 4px; }
+.application-ui .auth-panel .recovery-note { padding-bottom: 14px; max-width: none; }
+.application-ui .auth-submit { min-height: 48px; }
+.application-ui .auth-panel > .guest-link { margin-top: 6px; }
+.application-ui[dir="rtl"] .auth-panel, .application-ui[dir="rtl"] .auth-intro { direction: rtl; }
+.application-ui:lang(pa-Arab) .auth-intro h1 { font-family: 'Noto Nastaliq Urdu', serif; font-size: 42px; line-height: 1.9; letter-spacing: normal; max-width: none; }
+.application-ui:lang(pa-Arab) .auth-panel .field-hint { line-height: 2; }
+
+@media (max-width: 680px) {
+  .application-ui .auth-layout {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    gap: 20px;
+    padding: 20px 24px max(16px, env(safe-area-inset-bottom));
+  }
+  .application-ui .auth-intro { min-height: 80px; max-width: 420px; }
+  .application-ui .auth-intro h1 { max-width: none; font-size: clamp(32px, 9vw, 42px); }
+  .application-ui .auth-watermark { width: 145vw; left: -26vw; bottom: -16.8vw; }
+  .application-ui .auth-panel { background: linear-gradient(to bottom, var(--paper) calc(100% - 72px), transparent); }
+  .application-ui .auth-route-nav { margin-bottom: 16px; justify-content: center; }
+  .application-ui .auth-panel .field { margin-bottom: 12px; }
+  .application-ui:lang(pa-Arab) .auth-intro h1 { font-size: 28px; }
+}
+
+/* Compact label rows preserve input and button hit areas on short phones. */
+@media (max-height: 740px) {
+  .application-ui .auth-layout { padding-block: 8px max(8px, env(safe-area-inset-bottom)); gap: 12px; }
+  .application-ui .auth-route-nav { margin-bottom: 8px; }
+  .application-ui .auth-panel .field { margin-bottom: 8px; }
+  .application-ui .auth-panel .optional-details { margin-bottom: 0; }
+  .application-ui .auth-panel .recovery-note { padding-bottom: 8px; }
+  .application-ui .auth-panel > .guest-link { margin-top: 2px; }
+}
+@media (max-width: 680px) and (max-height: 740px) {
+  .application-ui .auth-intro { min-height: 54px; }
+  .application-ui .auth-intro h1 { font-size: 32px; }
+  .application-ui .auth-panel .field { display: grid; grid-template-columns: 90px minmax(0, 1fr); column-gap: 10px; }
+  .application-ui .auth-panel .field label { align-self: center; margin: 0; }
+  .application-ui .auth-panel .field-hint, .application-ui .auth-panel .field-error { grid-column: 1 / -1; }
+  .application-ui .auth-panel .field input { font-size: 16px; }
+  .application-ui:lang(pa-Arab) .auth-intro h1 { font-size: 26px; }
+}
+@media (max-width: 680px) and (max-height: 600px) {
+  .application-ui .auth-layout { gap: 4px; padding-block: 4px; }
+  .application-ui .auth-intro { min-height: 44px; }
+  .application-ui .auth-panel .field { margin-bottom: 4px; }
+  .application-ui .auth-route-nav { margin-bottom: 4px; }
+  .application-ui .auth-panel .recovery-note { padding-bottom: 4px; }
+}
+@media (max-width: 680px) and (max-height: 600px) {
+  .application-ui:has(.auth-layout) .site-header { padding-block: 6px; }
+  .application-ui .auth-layout { gap: 2px; }
+  .application-ui .auth-intro { min-height: 40px; }
+  .application-ui:lang(pa-Arab) .auth-panel .field-hint { line-height: 1.8; }
+}
+
+/* In phone landscape, use the available width for paired form rows. */
+@media (min-width: 681px) and (max-height: 500px) {
+  .application-ui:has(.auth-layout) .site-header { padding-block: 0; }
+  .application-ui:has(.auth-layout) .site-header .brand { font-size: 30px; }
+  .application-ui .auth-layout { grid-template-columns: minmax(0, .65fr) minmax(0, 1.8fr); gap: 24px; padding: 2px 24px; }
+  .application-ui .auth-intro h1 { font-size: 38px; }
+  .application-ui:lang(pa-Arab) .auth-intro h1 { font-size: 28px; }
+  .application-ui .auth-watermark { width: 70vw; left: -16vw; bottom: -16vw; }
+  .application-ui .auth-panel { width: 100%; }
+  .application-ui .auth-route-nav { margin-bottom: 4px; }
+  .application-ui .auth-panel fieldset { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 20px; align-items: start; }
+  .application-ui .auth-panel .field { margin: 0; }
+  .application-ui .auth-panel .field-hint { margin-top: 2px; }
+  .application-ui .auth-panel .optional-details { margin: 0; }
+  .application-ui .auth-panel .recovery-note { padding: 0; align-self: center; }
+  .application-ui .auth-submit { align-self: end; min-height: 44px; padding-block: 8px; }
+  .application-ui .auth-panel .field { display: grid; grid-template-columns: 76px minmax(0, 1fr); column-gap: 8px; }
+  .application-ui .auth-panel .field label { align-self: center; margin: 0; }
+  .application-ui .auth-panel .field-hint, .application-ui .auth-panel .field-error { grid-column: 1 / -1; }
+  .application-ui .auth-panel fieldset > .notice { grid-column: 1 / -1; }
+  .application-ui .auth-panel > .guest-link { margin-top: 0; }
+}
+
+/* Signup has more content: let the form breathe without changing sign-in. */
+@media (min-width: 681px) and (min-height: 501px) {
+  .application-ui .auth-signup .auth-panel { width: min(100%, 480px); }
+}
+@media (min-height: 800px) {
+  .application-ui .auth-signup .auth-panel .field { margin-bottom: 24px; }
+  .application-ui .auth-signup .auth-panel .optional-details { margin-top: 0; margin-bottom: 12px; }
+  .application-ui .auth-signup .auth-panel .recovery-note { padding-block: 4px 20px; }
+}
+@media (max-width: 680px) and (min-height: 800px) {
+  .application-ui .auth-signup .auth-intro { min-height: 54px; }
+  .application-ui .auth-layout.auth-signup { gap: 16px; }
+  .application-ui .auth-signup .auth-panel .field { margin-bottom: 20px; }
+}
+@media (min-height: 741px) and (max-height: 799px) {
+  .application-ui .auth-layout.auth-signup { padding-block: 8px max(8px, env(safe-area-inset-bottom)); gap: 12px; }
+  .application-ui .auth-signup .auth-route-nav { margin-bottom: 8px; }
+  .application-ui .auth-signup .auth-panel .field { margin-bottom: 8px; }
+  .application-ui .auth-signup .auth-panel .optional-details { margin-bottom: 0; }
+  .application-ui .auth-signup .auth-panel .recovery-note { padding-bottom: 8px; }
+  .application-ui .auth-signup .auth-panel > .guest-link { margin-top: 2px; }
+}
+@media (max-width: 680px) and (min-height: 741px) and (max-height: 799px) {
+  .application-ui .auth-signup .auth-intro { min-height: 54px; }
+  .application-ui .auth-signup .auth-intro h1 { font-size: 32px; }
+  .application-ui .auth-signup .auth-panel .field { display: grid; grid-template-columns: 90px minmax(0, 1fr); column-gap: 10px; }
+  .application-ui .auth-signup .auth-panel .field label { align-self: center; margin: 0; }
+  .application-ui .auth-signup .auth-panel .field-hint, .application-ui .auth-signup .auth-panel .field-error { grid-column: 1 / -1; }
+  .application-ui .auth-signup .auth-panel .field input { font-size: 16px; }
+  .application-ui:lang(pa-Arab) .auth-signup .auth-intro h1 { font-size: 26px; }
+}
+
+/* Each account step has only two fields, so labels can stay above inputs. */
+.application-ui .auth-signup .auth-panel .field,
+.application-ui .auth-onboarding .auth-panel .field { display: block; }
+.application-ui .auth-onboarding .onboarding-title { font-family: inherit; font-size: 18px; line-height: 1.65; letter-spacing: 0; margin-bottom: 28px; }
+.application-ui .auth-onboarding .auth-panel .field { margin-bottom: 24px; }
+.application-ui:lang(pa-Arab) .auth-onboarding .onboarding-title { line-height: 2.2; }
+.application-ui .auth-onboarding .onboarding-privacy { margin-top: 8px; padding-bottom: 24px; }
+@media (max-height: 740px) {
+  .application-ui .auth-signup .auth-panel .field,
+  .application-ui .auth-onboarding .auth-panel .field { margin-bottom: 12px; }
+  .application-ui .auth-onboarding .onboarding-title { margin-bottom: 16px; }
+  .application-ui .auth-onboarding .onboarding-privacy { padding-bottom: 16px; }
+}
+@media (min-width: 681px) and (max-height: 500px) {
+  .application-ui .auth-signup .auth-panel fieldset > .recovery-note,
+  .application-ui .auth-onboarding .auth-panel fieldset > .onboarding-privacy { grid-column: 1; }
+  .application-ui .auth-signup .auth-panel .field,
+  .application-ui .auth-onboarding .auth-panel .field { margin-bottom: 0; }
+  .application-ui .auth-onboarding .onboarding-privacy { margin-top: 0; padding-bottom: 0; }
+}

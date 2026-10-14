@@ -1,0 +1,26 @@
+.loading-state { --loading-ink: #665c4d; --loading-fill: #e5dccb; padding-block: 24px; color: var(--loading-ink); width: 100%; box-sizing: border-box; text-align: start; }
+.loading-caption { display: flex; align-items: center; gap: 12px; font: 400 14px/1.7 'Manrope', sans-serif; }
+.loading-dot { width: 7px; height: 7px; flex: 0 0 7px; border-radius: 50%; background: #874632; animation: content-breathe 1600ms ease-in-out infinite; }
+.loading-shape { margin-top: 28px; animation: content-breathe 1600ms ease-in-out infinite; }
+.loading-line { display: block; height: 12px; width: 100%; background: var(--loading-fill); }
+.loading-line + .loading-line { margin-top: 14px; }
+.loading-line--title { width: 68%; height: 32px; }
+.loading-line--meta { width: 28%; height: 9px; margin-top: 20px !important; }
+.loading-line--short { width: 73%; }
+.loading-paragraph { margin-top: 32px; }
+.loading-state--word .loading-line--title { height: 72px; width: 55%; }
+.loading-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 24px; border-bottom: 1px solid #cfc3ae; }
+.loading-row span { display: block; width: 45%; height: 20px; background: var(--loading-fill); }
+.loading-row span:last-child { width: 15%; height: 10px; }
+.loading-row:nth-child(2) span:first-child { width: 60%; }
+.loading-state--compact { padding-block: 16px; }
+.loading-state .loading-slow { margin: 16px 0 0; font: 400 13px/1.7 'Manrope', sans-serif; color: var(--loading-ink); }
+.loading-state:lang(pa-Arab) :is(.loading-caption,.loading-slow) { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.3; }
+.application-ui .button { position: relative; }
+.application-ui .button[aria-busy="true"] { cursor: progress; }
+.application-ui .button .busy-mark { display: inline-block; }
+@keyframes content-breathe { 0%,100% { opacity: 1; } 50% { opacity: .5; } }
+@media (prefers-reduced-motion: reduce) {
+  .loading-shape, .loading-dot, .application-ui .busy-mark { animation: none; }
+}
+@media (forced-colors: active) { .loading-line,.loading-row span { background: GrayText; } .loading-dot { background: Highlight; } }
