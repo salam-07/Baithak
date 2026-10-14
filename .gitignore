@@ -14,3 +14,23 @@ PRODUCT.md
 .keyword-qa
 .claude
 .feed-qa
+
+# Dependencies, build output, and local logs
+node_modules/
+dist/
+dist-ssr/
+logs/
+*.log
+*.local
+
+# Editor and operating system files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

@@ -3,6 +3,9 @@ import helmet from 'helmet';
 import cors from 'cors';
 import compression from 'compression';
 import pinoHttp from 'pino-http';
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 
 import env from './config/env.js';
 import logger from './utils/logger.js';
@@ -47,11 +50,7 @@ app.disable('x-powered-by');
 
 app.use(
   helmet({
-    // The API returns JSON and never HTML, so the content-security-policy
-    // defaults have nothing to protect here. Left enabled anyway rather than
-    // disabled wholesale — the other headers (HSTS, no-sniff, frameguard) are
-    // all still worth sending, and turning the whole package off to silence one
-    // header is how the useful ones get lost.
+    // Preserve the existing Helmet policy for the API and bundled frontend.
     contentSecurityPolicy: false,
   }),
 );
@@ -178,13 +177,20 @@ app.get('/health', (req, res) => {
   });
 });
 
-/**
- * A short description at the root.
- *
- * Not documentation — that is BACKEND.md — but a bare 404 on `/` looks like a
- * misconfigured service, and someone who points a browser at a running API
- * deserves to be told what they found.
- */
+// Resolve from this module so serving works regardless of the working directory.
+const frontendDist = fileURLToPath(new URL('../../frontend/dist/', import.meta.url));
+const frontendIndex = path.join(frontendDist, 'index.html');
+if (existsSync(frontendIndex)) {
+  // Unknown API endpoints must retain their JSON 404 response.
+  app.use('/api', notFoundHandler);
+  app.use(express.static(frontendDist));
+  app.get('/{*splat}', (req, res, next) => {
+    // Missing assets should be 404s, not HTML returned as JavaScript or CSS.
+    if (path.extname(req.path) || !req.accepts('html')) return next();
+    res.sendFile(frontendIndex);
+  });
+}
+// Keep the API description available when the frontend has not been built.
 app.get('/', (req, res) => {
   res.json({
     success: true,
