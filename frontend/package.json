@@ -7,16 +7,19 @@
     "dev": "vite --host",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "verify:keywords": "node scripts/verify-keywords.cjs"
   },
   "dependencies": {
     "@fontsource/bodoni-moda": "^5.3.0",
     "@fontsource/manrope": "^5.3.0",
     "@fontsource/noto-nastaliq-urdu": "^5.3.0",
+    "@fontsource/playfair-display": "^5.3.0",
     "@tailwindcss/vite": "^4.3.3",
     "gsap": "^3.15.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.4",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
