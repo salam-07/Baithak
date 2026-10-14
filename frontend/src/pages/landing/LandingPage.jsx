@@ -54,7 +54,7 @@ export default function LandingPage() {
           </div>
           <article className="feature-row">
             <div className="feature-title"><h3>A little reading.<br />A lasting connection.</h3><Punjabi>تھوڑی جئی پڑھت۔<br />ڈونگھا جیہا ناتا۔</Punjabi></div>
-            <div className="feature-copy"><p>A couplet for a spare moment. A folk tale for a slower afternoon. Read in Punjabi, English, or both, without needing an account.</p><Punjabi>ویہل دے دو پل نیں، تاں کوئی شعر پڑھ لو۔ کجھ ہور ویہل اے، تاں پوری کہانی۔ پنجابی وچ، انگریزی وچ، یا دوناں وچ۔ پڑھن لئی کھاتہ بناؤن دی لوڑ نئیں۔</Punjabi></div>
+            <div className="feature-copy"><p>A couplet for a spare moment. A folk tale for a slower afternoon. Read in Punjabi, English, or both, without needing an account.</p><Punjabi>ویہل دے دو پل نیں، تاں کوئی شعر پڑھ لو۔ کجھ ہور ویہل اے، تاں پوری کہانی۔ پنجابی وچ، انگریزی وچ، یا دوناں وچ۔ پڑھن لئی اکاؤنٹ بناؤن دی لوڑ نئیں۔</Punjabi></div>
           </article>
           <article className="feature-row feature-words">
             <div className="feature-title"><h3>One word opens<br />another world.</h3><Punjabi>اک لفظ توں<br />اگے ہور وی کِنّا کجھ۔</Punjabi></div>
