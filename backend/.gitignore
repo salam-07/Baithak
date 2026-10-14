@@ -24,4 +24,10 @@ dist-ssr
 *.sw?
 
 .env
+
+BACKEND.md
+KEYWORDS.md
+*.test.js
 scripts
+test-helpers
+data

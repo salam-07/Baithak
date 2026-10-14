@@ -2,3 +2,15 @@ DESIGN.md
 PRODUCT.md
 
 .impeccable
+
+# Secrets. Each service keeps its own .gitignore, but the rule goes here too,
+# because a pattern in one directory does not cover another and `.env.production`
+# is a file anyone might add without thinking about it. Values never belong in
+# the repository — backend/.env.example documents the shape of the file and
+# carries none. The negation below is what keeps that example file committable.
+.env
+.env.*
+!.env.example
+.keyword-qa
+.claude
+.feed-qa
