@@ -34,3 +34,6 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Local folklore seed preservation fingerprints and audit reports
+.folklore-qa/

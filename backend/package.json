@@ -13,6 +13,7 @@
     "start": "node src/server.js",
     "test": "node --test",
     "seed:keywords": "node src/scripts/seed-keywords.js",
+    "seed:folklore": "node src/scripts/seed-folklore.js",
     "seed:demo": "node src/scripts/seed-demo.js",
     "seed:demo:fresh": "node src/scripts/seed-demo.js --fresh",
     "prune:interests": "node src/scripts/prune-interests.js",

@@ -30,3 +30,12 @@ KEYWORDS.md
 *.test.js
 scripts
 test-helpers
+# Keep the additive folklore seed and its regression checks reviewable.
+!src/scripts/
+src/scripts/*
+!src/scripts/seed-folklore.js
+!src/scripts/verify-folklore.js
+!src/data/folklore/corpus.test.js
+
+FOLKLORE.md
+src/data/folklore
