@@ -67,6 +67,7 @@ function Composer({ story, onSaved }) {
       <label htmlFor="story-body">{t('storyText')}</label><textarea id="story-body" required maxLength={50000} rows={12} value={form.body} {...scriptProps(writingLanguage.content)} onChange={e => update('body', e.target.value)} aria-describedby="writing-hint" /><p id="writing-hint" className="content-note">{t('writingHint')}</p>
     </fieldset>
     <p className="publish-note">{t('publicNote')}</p>
+    <p className="content-note">{t('createTranslationNote')} <Link className="text-link" to="/app/translation">{t('aboutTranslations')}</Link></p>
     {error && <p role="alert" className="content-error">{t(error)}</p>}
     <div role="status" className="save-status">{success && t(success)}{dirty && t(storageOk ? 'draftInTab' : 'draftNotLocal')}</div>
     <div className="composer-actions"><Button type="submit" value="published" className="primary" busy={busy}>{t(busy ? 'savingStory' : story?.status === 'published' ? 'saveChanges' : 'publishStory')}</Button>{story?.status !== 'published' && <Button type="submit" value="draft" disabled={busy}>{t('saveDraft')}</Button>}</div>

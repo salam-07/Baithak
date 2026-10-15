@@ -143,3 +143,49 @@
   .application-ui.baithak-shell .app-layout.feed-route .app-content { padding-inline: 14px; }
 }
 
+
+/* Create leads the sidebar; secondary destinations share a mobile disclosure. */
+.application-ui.baithak-shell .nav-create {
+  margin-bottom: 16px;
+  background: var(--olive);
+  color: var(--paper);
+  justify-content: center;
+}
+.application-ui.baithak-shell .nav-create:hover:not(.active) { background: var(--clay); color: var(--paper); }
+.application-ui.baithak-shell .nav-menu-toggle { display: none; }
+.application-ui.baithak-shell .nav-popup { display: none; }
+@media (max-width: 680px) {
+  .application-ui.baithak-shell .main-navigation { direction: ltr; }
+  .application-ui.baithak-shell .nav-label { direction: initial; }
+  .application-ui.baithak-shell .nav-secondary { display: none; }
+  .application-ui.baithak-shell .nav-menu-toggle {
+    display: flex; order: 4; border: 0; border-radius: 0;
+    background: transparent; font-family: inherit; cursor: pointer;
+  }
+  .application-ui.baithak-shell [data-destination="feed"] { order: 0; }
+  .application-ui.baithak-shell .nav-create { order: 2; margin: 0; }
+  .application-ui.baithak-shell [data-destination="keywords"] { order: 1; }
+  .application-ui.baithak-shell [data-destination="search"] { order: 3; }
+  .application-ui.baithak-shell .nav-create { background: transparent; color: var(--muted); }
+  .application-ui.baithak-shell .nav-create:hover:not(.active) { background: var(--surface); color: var(--clay); }
+  .application-ui.baithak-shell .nav-create.active,
+  .application-ui.baithak-shell .nav-create.active:hover { background: transparent; color: var(--clay); }
+  .application-ui.baithak-shell .nav-create:focus-visible { outline-color: var(--clay); }
+  @media (hover: none) {
+    .application-ui.baithak-shell .nav-create:hover:not(.active) { background: transparent; color: var(--muted); }
+  }
+  .application-ui.baithak-shell .nav-popup:popover-open {
+    position: fixed; inset: auto 12px calc(var(--dock-height) + env(safe-area-inset-bottom) + 10px) auto;
+    display: flex; width: min(300px, calc(100vw - 24px)); padding: 8px; margin: 0;
+    border: 1px solid var(--rule); background: var(--paper); color: var(--ink);
+  }
+  .application-ui.baithak-shell .nav-popup-link {
+    display: flex; flex: 1 1 0; min-width: 0; min-height: 64px;
+    flex-direction: column; justify-content: center; align-items: center; gap: 8px;
+    padding: 10px 6px; font-size: 12px; text-align: center; text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .application-ui.baithak-shell .nav-popup-link:hover,
+  .application-ui.baithak-shell .nav-popup-link[aria-current="page"] { background: var(--surface); color: var(--clay); }
+  .application-ui.baithak-shell .nav-popup-link:focus-visible { outline: 2px solid var(--clay); outline-offset: -2px; }
+}

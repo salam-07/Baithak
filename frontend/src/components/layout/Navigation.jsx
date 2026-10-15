@@ -1,10 +1,11 @@
 import { useAuth } from '../../context/AuthContext';
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
 import Icon from '../ui/Icon';
 
 const destinations = [
+  { name: 'create', to: '/app/write' },
   { name: 'feed', to: '/app' },
   { name: 'keywords', to: '/app/keywords' },
   { name: 'search', to: '/app/search' },
@@ -20,10 +21,22 @@ export default function Navigation() {
   const { user } = useAuth();
   const nav = useRef(null);
   const marker = useRef(null);
+  const popup = useRef(null);
+  const popupId = useId();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const secondaryActive = pathname.startsWith('/app/translation') || pathname.startsWith('/app/profile');
+  useEffect(() => {
+    const panel = popup.current;
+    panel?.hidePopover();
+    const desktop = window.matchMedia('(min-width: 681px)');
+    const close = () => { if (desktop.matches) panel?.hidePopover(); };
+    desktop.addEventListener('change', close);
+    return () => desktop.removeEventListener('change', close);
+  }, [pathname]);
   useLayoutEffect(() => {
     const node = nav.current;
     const measure = () => {
-      const active = node.querySelector('[aria-current="page"]');
+      const active = [...node.querySelectorAll(':scope > .nav-link.active')].find(item => item.offsetWidth);
       if (!active || !active.offsetWidth) { marker.current.style.opacity = '0'; return; }
       marker.current.style.width = `${active.offsetWidth}px`;
       marker.current.style.height = `${active.offsetHeight}px`;
@@ -38,16 +51,26 @@ export default function Navigation() {
   }, [pathname, locale]);
   return <nav ref={nav} className="main-navigation" aria-label={t('navigation')}>
     <span ref={marker} className="nav-marker" aria-hidden="true" />
+    <button type="button" className={`nav-link nav-menu-toggle${secondaryActive ? ' active' : ''}`} popoverTarget={popupId} aria-expanded={menuOpen} aria-controls={popupId}>
+      <span className="nav-icon"><Icon name="menu" /></span><span className="nav-label">{t('navigationMenu')}</span>
+    </button>
     {destinations.map(({ name, to }) => {
       const active = name === 'feed'
         ? ['/', '/app', '/app/feed'].includes(pathname) || pathname.startsWith('/app/stories/')
         : name === 'keywords'
           ? pathname === to || pathname === '/app/explore' || pathname.startsWith('/app/words/') || pathname.startsWith('/app/keywords/')
           : pathname === to || pathname.startsWith(`${to}/`);
-      return <Link className={`nav-link${active ? ' active' : ''}`} data-destination={name} aria-current={active ? 'page' : undefined} key={name} to={name === 'feed' && user ? '/' : to}>
-        <span className="nav-icon"><Icon name={name === 'keywords' ? 'book' : name === 'translation' ? 'language' : name} /></span><span className="nav-label">{t(name)}</span>
+      return <Link className={`nav-link${active ? ' active' : ''}${name === 'create' ? ' nav-create' : ''}${['translation', 'profile'].includes(name) ? ' nav-secondary' : ''}`} data-destination={name} aria-current={active ? 'page' : undefined} key={name} to={name === 'feed' && user ? '/' : to}>
+        <span className="nav-icon"><Icon name={name === 'create' ? 'write' : name === 'keywords' ? 'book' : name === 'translation' ? 'language' : name} /></span><span className="nav-label">{t(name)}</span>
       </Link>;
     })}
+    <div ref={popup} id={popupId} popover="auto" className="nav-popup" onToggle={event => setMenuOpen(event.newState === 'open')}>
+      {destinations.filter(({ name }) => ['translation', 'profile'].includes(name)).map(({ name, to }) => <Link
+        key={name} to={to} className="nav-popup-link" aria-current={pathname.startsWith(to) ? 'page' : undefined}
+        onClick={() => popup.current?.hidePopover()}>
+        <Icon name={name === 'translation' ? 'language' : name} /><span>{t(name)}</span>
+      </Link>)}
+    </div>
   </nav>;
 }
 

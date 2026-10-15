@@ -15,13 +15,13 @@ import { useLanguage } from '../../context/LanguageContext';
  * deliberately kept out of the address bar, which is what makes those two
  * behaviours fall out of one value. A URL the reader could reload would replay
  * the same shuffle, and the seed staying put for the life of the mount is what
- * lets "Load more" continue the same deal instead of re-dealing from the top and
+ * lets automatic loading continue the same deal instead of re-dealing from the top and
  * showing stories twice.
  */
 export default function FeedPage() {
   const { t } = useLanguage();
   const [seed] = useState(() => Math.floor(Math.random() * 1_000_000));
-  const query = new URLSearchParams({ limit: '12', seed: String(seed) });
+  const query = new URLSearchParams({ limit: '6', seed: String(seed) });
   const path = `/stories?${query}`;
   return <>
     <PageHeading title={t('feed')} visible={false} />

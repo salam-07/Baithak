@@ -5,7 +5,7 @@ const baseUrl = (import.meta.env.VITE_API_URL || defaultUrl).replace(/\/$/, '');
 export class ApiError extends Error {
   constructor(status, code, details) { super(code); this.status = status; this.code = code; this.details = details; }
 }
-export async function request(path, { method = 'GET', body, token, withMeta = false } = {}) {
+export async function request(path, { method = 'GET', body, token, withMeta = false, signal } = {}) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 15000);
   try {
@@ -13,7 +13,7 @@ export async function request(path, { method = 'GET', body, token, withMeta = fa
       method,
       headers: { Accept: 'application/json', ...(body ? { 'Content-Type': 'application/json' } : {}), ...(token ? { Authorization: `Bearer ${token}` } : {}) },
       ...(body ? { body: JSON.stringify(body) } : {}),
-      signal: controller.signal,
+      signal: signal ? AbortSignal.any([signal, controller.signal]) : controller.signal,
     });
     if (response.status === 204) return null;
     const payload = await response.json().catch(() => null);

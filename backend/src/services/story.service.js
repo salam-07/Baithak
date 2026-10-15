@@ -82,12 +82,13 @@ function prepareTexts(texts = []) {
  * document from the first write, rather than being patched in afterwards by a
  * second update that could fail and leave a story permanently unindexed.
  */
-export async function createStory({ authorId, texts, status } = {}) {
+export async function createStory({ authorId, texts, status, storyId } = {}) {
   const prepared = prepareTexts(texts);
 
   const { keywordIds, terms } = await extractForStory({ texts: prepared });
 
   const story = new Story({
+    ...(storyId ? { _id: storyId } : {}),
     author: authorId,
     texts: prepared,
     keywords: keywordIds.slice(0, MAX_KEYWORDS_PER_STORY),

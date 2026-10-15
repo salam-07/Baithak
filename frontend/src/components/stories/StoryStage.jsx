@@ -2,7 +2,7 @@ import LoadingState from '../ui/LoadingState';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import Button from '../ui/Button';
+import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import Icon from '../ui/Icon';
 import FeedRail from './FeedRail';
 import KeywordText from './KeywordText';
@@ -93,13 +93,15 @@ const StageCard = memo(function StageCard({ story, index, failure, onOpen, onPre
 function EndsStep({ resource }) {
   const { t } = useLanguage();
   const hasMore = Boolean(resource.meta?.pagination?.hasMore);
+  if (hasMore) return <div className="feed-card feed-ends"><div className="feed-card-body">
+    {resource.error ? <ResourceState resource={resource} /> : <LoadingState label="loadingMore" compact />}
+  </div></div>;
   return (
     <div className="feed-card feed-ends">
       <div className="feed-card-body">
         <h2>{t(hasMore ? 'moreStories' : 'allRead')}</h2>
         <p>{t('tryAnotherPath')}</p>
         <div className="feed-ends-actions">
-          {hasMore && <Button busy={resource.busy} onClick={resource.more}>{t('loadMore')}</Button>}
           <Link className="text-link" to="/app/keywords">{t('keywords')}<Icon name="arrow" /></Link>
           <Link className="text-link" to="/app/write">{t('write')}<Icon name="arrow" /></Link>
         </div>
@@ -123,6 +125,7 @@ export default function StoryStage({ path, banner = null }) {
   const [opened, setOpened] = useState(null);
   const [reactions, setReactions] = useState({});
   const [failures, setFailures] = useState({});
+  const sentinel = useInfiniteScroll(resource, { root: stage, rootMargin: '1600px 0px', paused: Boolean(opened) });
 
   // `authorizedRequest` is rebuilt whenever the session changes, and the prefetch
   // handler must not change with it — a card that re-renders when the session does
@@ -249,7 +252,7 @@ export default function StoryStage({ path, banner = null }) {
             <StageCard story={story} index={index} failure={failures[story.id]} onOpen={open} onPrefetch={prefetch} />
           </li>)}
 
-          {stories.length > 0 && <li className="feed-step" data-index={stories.length} data-current={active === stories.length} ref={(node) => { steps.current[stories.length] = node; }}>
+          {stories.length > 0 && <li className="feed-step" data-index={stories.length} data-current={active === stories.length} ref={(node) => { steps.current[stories.length] = node; sentinel.current = node; }}>
             <EndsStep resource={resource} />
           </li>}
         </ol>
@@ -270,7 +273,7 @@ export default function StoryStage({ path, banner = null }) {
         onClose={close}
       />}
 
-      <p className="sr-only" aria-live="polite">{current ? `${active + 1} / ${stories.length} — ${textFor(current, contentPreference)?.title ?? current.title}` : t(loading ? 'loadingContent' : 'allRead')}</p>
+      <p className="sr-only" aria-live="polite">{current ? `${active + 1} / ${stories.length} — ${textFor(current, contentPreference)?.title ?? current.title}` : t(loading || resource.meta?.pagination?.hasMore ? 'loadingContent' : 'allRead')}</p>
     </div>
   );
 }

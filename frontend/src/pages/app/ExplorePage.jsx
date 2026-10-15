@@ -24,7 +24,7 @@ function Directory({ path, filtered }) {
       </Link>;
     })}</div>
     {resource.data?.length === 0 && !resource.busy && !resource.error && <div className="discovery-empty" role="status"><h2>{t('noKeywords')}</h2><p>{t('noWords')}</p>{filtered && <Link className="text-link" to="/app/keywords">{t('browseKeywords')}<Icon name="arrow" /></Link>}</div>}
-    <Pagination resource={resource} />
+    <Pagination resource={resource} automatic />
   </>;
 }
 export default function ExplorePage({ searchOnly = false }) {
@@ -37,7 +37,7 @@ function ExploreContent({ searchOnly, seed }) {
   const [params, setParams] = useSearchParams();
   const [query, setQuery] = useState(params.get('q') || '');
   const submitted = params.get('q')?.trim() || '';
-  const path = '/' + (searchOnly ? 'stories' : 'keywords') + '?limit=18' + (!searchOnly ? '&seed=' + seed : '') + (submitted ? '&search=' + encodeURIComponent(submitted) : '');
+  const path = '/' + (searchOnly ? 'stories' : 'keywords') + '?limit=' + (searchOnly ? 18 : 12) + (!searchOnly ? '&seed=' + seed : '') + (submitted ? '&search=' + encodeURIComponent(submitted) : '');
   function search(event) { event.preventDefault(); setParams(query.trim() ? { q: query.trim() } : {}); }
   return <section className={'workspace-page discovery-page ' + (searchOnly ? 'search-page' : 'keywords-page')}>
     <PageHeading title={t(searchOnly ? 'search' : 'keywords')}>
@@ -99,7 +99,7 @@ function WordDetail({ wordKey }) {
     </section>
     <section className="word-entry-section word-entry-stories" id="word-stories" aria-labelledby="word-stories-title">
       <h2 id="word-stories-title">{t('storiesWithWord')}</h2>
-      <div className="word-section-body"><StoryList key={'stories-' + word.id} path={`/stories?keyword=${word.id}&limit=12`} /></div>
+      <div className="word-section-body"><StoryList key={'stories-' + word.id} path={`/stories?keyword=${word.id}&limit=12`} automatic /></div>
     </section>
   </article>}</>;
 }

@@ -1,9 +1,16 @@
 import content from './content';
 // Keep interface copy together. Punjabi is Shahmukhi; Roman Punjabi is Punjabi in Latin script.
 const copy = { ...content,
+  createTranslationNote: ["Baithak’s admin manually adds translations after publication, without relying on AI; credited community translations are coming soon.", "کہانی شائع ہون توں کجھ چِر بعد بیٹھک دا ایڈمن AI اُتے بھروسہ کیتے بغیر ترجمے آپ شامل کردا اے؛ چھیتی تسی وی اپنے ناں دے کریڈٹ نال ترجمے وچ حصہ پا سکو گے۔", "Kahani shaya hon ton kujh chir baad Baithak da admin AI utte bharosa keete baghair tarjume aap shamil karda ae; chheti tusi vi apne naa de credit naal tarjume vich hissa pa sako ge."],
+  aboutTranslations: ["About translations", "ترجمیاں بارے", "Tarjumeyan bare"],
+
+  navigationMenu: ["Menu", "مینو", "Menu"],
   keywords: ["Keywords","لفظ","Lafz"],
   translation: ["Translation","ترجمہ","Tarjuma"],
-  translationSoon: ["Coming Soon","چھیتی آ رہیا اے","Chheti aa reha ae"],
+  translationSoon: ["Community translations are coming soon", "سانجھے ترجمے چھیتی آ رہے نیں", "Sanjhe tarjume chheti aa rahe ne"],
+  translationCurrent: ["For now, Baithak’s admin manually translates posted stories. Translations become available on each story after a while, with no extra steps for readers. We do this to avoid relying on AI.", "فی الحال بیٹھک دا ایڈمن شائع ہوئیاں کہانیاں دا ترجمہ آپ کردا اے۔ کجھ چِر بعد ترجمے کہانی دے نال مل جاندے نیں؛ پڑھن والیاں نوں وکھرا کجھ نئیں کرنا پیندا۔ ایہہ طریقہ اسیں AI اُتے بھروسہ کرن توں بچن لئی ورتدے آں۔", "Filhaal Baithak da admin shaya hoiyan kahanian da tarjuma aap karda ae. Kujh chir baad tarjume kahani de naal mil jande ne; parhan walian nu vakhra kujh nai karna painda. Eh tareeqa asin AI utte bharosa karan ton bachan layi vartde aan."],
+  translationCommunity: ["Soon, you’ll be able to contribute translations through a community translation system, with credit for your work, to help bring Punjabi stories to more readers.", "چھیتی تسی سانجھے ترجمے دے نظام راہیں اپنا حصہ پا سکو گے۔ تہاڈے کم دا کریڈٹ تہانوں ملے گا، تے پنجابی کہانیاں ہور پڑھن والیاں تک پہنچ سکن گیاں۔", "Chheti tusi sanjhe tarjume de nizam raahin apna hissa pa sako ge. Tuhade kam da credit tuhanu mile ga, te Punjabi kahanian hor parhan walian tak pahunch sakan gian."],
+  translationContact: ["Want to contribute in the meantime? Send us a message:", "اوہدوں تک حصہ پانا چاہندے او؟ سانوں پیغام بھیجو:", "Ohdon tak hissa pauna chahnde o? Sanu paigham bhejo:"],
   keywordInvitation: ["A word, a meaning, a way into a story.","اک لفظ، اک مطلب، کہانی ول اک راہ۔","Ik lafz, ik matlab, kahani vall ik raah."],
   keywordShuffleNote: ["A fresh arrangement each time you visit. Follow a word that catches your eye.","ہر واری لفظ نویں ترتیب وچ۔ جیہڑا لفظ دل نوں بھاوے، اوہ کھولو۔","Har vaari lafz naveen tarteeb vich. Jehra lafz dil nu bhaave, oh kholo."],
   browseKeywords: ["Browse keywords","لفظ ویکھو","Lafz vekho"],

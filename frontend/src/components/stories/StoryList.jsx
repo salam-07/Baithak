@@ -5,6 +5,7 @@ import { errorMessage } from '../../lib/api';
 import LoadingState from '../ui/LoadingState';
 import Button from '../ui/Button';
 import useResource from '../../hooks/useResource';
+import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 
 export function ResourceState({ resource }) {
   const { t } = useLanguage();
@@ -12,9 +13,10 @@ export function ResourceState({ resource }) {
   if (resource.busy) return <LoadingState label={resource.loadingLabel} kind={resource.loadingKind} compact={resource.data !== null} />;
   return null;
 }
-export function Pagination({ resource }) {
+export function Pagination({ resource, automatic = false }) {
   const { t } = useLanguage();
-  return <div className="list-footer"><ResourceState resource={resource} />{!resource.busy && !resource.error && (resource.meta?.pagination?.hasMore ? <Button onClick={resource.more}>{t('loadMore')}</Button> : resource.data?.length > 0 && <p>{t('allRead')}</p>)}</div>;
+  const sentinel = useInfiniteScroll(resource, { paused: !automatic });
+  return <div className="list-footer" ref={sentinel}><ResourceState resource={resource} />{!resource.busy && !resource.error && (resource.meta?.pagination?.hasMore ? !automatic && <Button onClick={resource.more}>{t('loadMore')}</Button> : resource.data?.length > 0 && <p>{t('allRead')}</p>)}</div>;
 }
 export function StoryCard({ story }) {
   const { t, contentPreference } = useLanguage();
@@ -25,10 +27,10 @@ export function StoryCard({ story }) {
     <Link className="text-link" to={story.status === 'draft' ? `/app/write/${story.id}` : `/app/stories/${story.id}`}>{t(story.status === 'draft' ? 'continueDraft' : 'readStory')}</Link>
   </article>;
 }
-export function StoryList({ path, empty = 'noStories' }) {
+export function StoryList({ path, empty = 'noStories', automatic = false }) {
   const resource = useResource(path, true);
   const { t } = useLanguage();
   return <><div>{resource.data?.map(story => <StoryCard key={story.id} story={story} />)}</div>
     {!resource.busy && !resource.error && resource.data?.length === 0 && <div className="content-empty"><h2>{t(empty)}</h2><p>{t('tryAnotherPath')}</p><Link className="text-link" to={empty === 'noSearchResults' ? '/app/keywords' : '/app/write'}>{t(empty === 'noSearchResults' ? 'browseKeywords' : 'write')}</Link></div>}
-    <Pagination resource={resource} /></>;
+    <Pagination resource={resource} automatic={automatic} /></>;
 }
