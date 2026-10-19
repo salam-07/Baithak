@@ -416,9 +416,8 @@ export async function getStory({ storyId, viewerId, isAdmin = false } = {}) {
   if (!mongoose.Types.ObjectId.isValid(storyId)) throw ApiError.notFound('Story');
 
   const story = await Story.findById(storyId)
-    .select('-tags') // Hide legacy data until the removal migration has run.
+    .select('-tags -keywordHistory')
     .populate('author', 'name username')
-    .populate('keywords', 'key labels type')
     .lean({ virtuals: false });
 
   if (!story) throw ApiError.notFound('Story');
@@ -432,12 +431,11 @@ export async function getStory({ storyId, viewerId, isAdmin = false } = {}) {
     throw ApiError.notFound('Story');
   }
 
-  if (viewerId) {
-    const liked = await Like.exists({ user: viewerId, story: story._id });
-    story.viewerHasLiked = Boolean(liked);
-  }
-
-  const detected = await annotateForStory(story.texts, story.keywordSettings);
+  const [detected, liked] = await Promise.all([
+    annotateForStory(story.texts, story.keywordSettings),
+    viewerId ? Like.exists({ user: viewerId, story: story._id }) : null,
+  ]);
+  if (viewerId) story.viewerHasLiked = Boolean(liked);
   story.annotations = detected.annotations;
   story.keywords = detected.keywords;
   story.detectedKeywords = detected.detectedKeywords;

@@ -3,12 +3,23 @@ import { buildMatcher, annotateStory, annotateExcerpts } from './keyword-annotat
 import { effectiveKeywordIds } from './keyword-metadata.service.js';
 import { toCardKeyword } from './story-card.js';
 import { extractKeywords } from './keyword-matcher.js';
+import createTtlCache from '../utils/cache.js';
 
-// A fresh database snapshot makes community corrections visible across workers.
-// Matching is performed once per story, with one batched lookup for explanations.
+// Reuse the public alias table and compiled matcher across reads. Local edits
+// invalidate immediately; other workers see corrections within 30 seconds.
+// Explanations are still fetched fresh, and no viewer data is cached here.
+const keywordIndex = createTtlCache({
+  name: 'keyword-matcher',
+  ttlMs: 30_000,
+  loader: async () => {
+    const keywords = await Keyword.find({}, 'key labels aliases').sort({ key: 1 }).lean();
+    return { keywords, matcher: buildMatcher(keywords) };
+  },
+});
+
 export async function annotateForStory(texts = [], settings = {}) {
-  const keywords = await Keyword.find({}, 'key labels aliases').sort({ key: 1 }).lean();
-  const result = annotateStory(texts, buildMatcher(keywords));
+  const { keywords, matcher } = await keywordIndex.get();
+  const result = annotateStory(texts, matcher);
   const ids = new Set(result.keywordIds);
   const excluded = new Set((settings.excluded ?? []).map(String));
   const custom = new Set((settings.custom ?? []).map(String));
@@ -34,8 +45,7 @@ export async function annotateForStory(texts = [], settings = {}) {
 export async function annotateCards(cards = []) {
   if (cards.length === 0) return cards;
 
-  const words = await Keyword.find({}, 'key labels aliases').sort({ key: 1 }).lean();
-  const matcher = buildMatcher(words);
+  const { keywords: words, matcher } = await keywordIndex.get();
   // Built once per distinct exclusion set rather than once per card. A story that
   // excludes a word is the exception, not the rule, and most readers who do it do it
   // to one story.
@@ -83,6 +93,6 @@ export async function extractForStory({ texts = [] } = {}) {
   return { keywordIds, terms: [...terms.values()].sort((a, b) => b.score - a.score).slice(0, 12) };
 }
 
-export function invalidateKeywordIndex() {}
-export function keywordIndexStatus() { return { strategy: 'database-snapshot' }; }
+export function invalidateKeywordIndex() { keywordIndex.invalidate(); }
+export function keywordIndexStatus() { return { strategy: 'cached-matcher', ...keywordIndex.status }; }
 export default { extractForStory, invalidateKeywordIndex, keywordIndexStatus };

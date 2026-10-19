@@ -183,6 +183,9 @@ const frontendIndex = path.join(frontendDist, 'index.html');
 if (existsSync(frontendIndex)) {
   // Unknown API endpoints must retain their JSON 404 response.
   app.use('/api', notFoundHandler);
+  // Vite filenames contain a content hash; only these assets are immutable.
+  // Keep HTML revalidated so a deployment always points at the current bundle.
+  app.use('/assets', express.static(path.join(frontendDist, 'assets'), { maxAge: '1y', immutable: true }));
   app.use(express.static(frontendDist));
   app.get('/{*splat}', (req, res, next) => {
     // Missing assets should be 404s, not HTML returned as JavaScript or CSS.

@@ -3,17 +3,18 @@ export default function createTtlCache({ ttlMs, loader, name = 'cache' }) {
   let value;
   let expiresAt = 0;
   let inflight = null;
+  let generation = 0;
 
   const isFresh = () => expiresAt > Date.now() && value !== undefined;
 
-  async function load() {
-    // The loader runs outside the freshness check by design: whatever it
-    // returns becomes the new value even if the entry was refreshed while it
-    // was running, but a single caller still only ever triggers one run.
+  async function load(version) {
     const loaded = await loader();
-    value = loaded;
-    expiresAt = Date.now() + ttlMs;
-    return value;
+    // An edit may invalidate the snapshot while its query is still running.
+    if (version === generation) {
+      value = loaded;
+      expiresAt = Date.now() + ttlMs;
+    }
+    return loaded;
   }
 
   return {
@@ -21,11 +22,12 @@ export default function createTtlCache({ ttlMs, loader, name = 'cache' }) {
       if (isFresh()) return value;
 
       if (!inflight) {
-        inflight = load().finally(() => {
+        const version = generation;
+        inflight = load(version).finally(() => {
           // Cleared in `finally` so a rejected loader does not leave the cache
           // permanently wedged on a rejected promise — the next caller retries
           // rather than inheriting the failure forever.
-          inflight = null;
+          if (version === generation) inflight = null;
         });
       }
 
@@ -41,6 +43,7 @@ export default function createTtlCache({ ttlMs, loader, name = 'cache' }) {
      * better, since reads outnumber writes here by a wide margin.
      */
     invalidate() {
+      generation += 1;
       value = undefined;
       expiresAt = 0;
       inflight = null;

@@ -163,6 +163,16 @@ export default function StoryStage({ path, banner = null }) {
 
   const prefetch = useCallback((id) => prefetchStory(id, send.current), []);
 
+  // Warm only the settled, visible card. Fast scrolling cancels the timer,
+  // and constrained connections keep the existing press/focus-only behavior.
+  const currentId = current?.id;
+  useEffect(() => {
+    const connection = navigator.connection;
+    if (!currentId || opened || connection?.saveData || /(^|-)2g$/.test(connection?.effectiveType || '')) return;
+    const timer = setTimeout(() => prefetch(currentId), 400);
+    return () => clearTimeout(timer);
+  }, [currentId, opened, prefetch]);
+
   // The card's own element is kept beside the open state so that closing hands the
   // reader back to the control they pressed — the keyboard path continues from the
   // card rather than from the top of the document.

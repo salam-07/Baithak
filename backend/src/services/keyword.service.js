@@ -120,18 +120,22 @@ function toKeywordSummary(keyword) {
 
 export async function getKeywordByKey(key) {
   const keyword = await Keyword.findOne({ key: String(key).toLowerCase() })
-    .populate('related', 'key labels type storyCount isCurated sources')
+    .select('-history -normalizedAliases')
     .lean();
 
   if (!keyword) throw ApiError.notFound('Keyword');
 
-  const [alsoAppearsWith, recentStories] = await Promise.all([
+  const [alsoAppearsWith, recentStories, related] = await Promise.all([
     findCoOccurringKeywords(keyword._id),
     Story.find({ status: STORY_STATUS.PUBLISHED, keywords: keyword._id }, 'publishedAt likeCount')
       .sort({ publishedAt: -1 })
       .limit(1)
       .lean(),
+    keyword.related?.length
+      ? Keyword.find({ _id: { $in: keyword.related } }, 'key labels type storyCount isCurated sources').lean()
+      : [],
   ]);
+  const relatedById = new Map(related.map(word => [String(word._id), word]));
 
   return {
     ...toKeywordSummary(keyword),
@@ -143,7 +147,7 @@ export async function getKeywordByKey(key) {
     aliases: keyword.aliases ?? [],
     revision: keyword.revision ?? 1,
     sources: keyword.sources ?? [],
-    related: (keyword.related ?? []).map(toKeywordSummary),
+    related: (keyword.related ?? []).map(id => relatedById.get(String(id))).filter(Boolean).map(toKeywordSummary),
     alsoAppearsWith,
     coOccurrenceSample: CO_OCCURRENCE_SAMPLE,
     latestStoryAt: recentStories[0]?.publishedAt ?? null,
@@ -165,6 +169,8 @@ async function findCoOccurringKeywords(keywordId, limit = 8) {
     { $match: { status: STORY_STATUS.PUBLISHED, keywords: keywordId } },
     { $sort: { publishedAt: -1 } },
     { $limit: CO_OCCURRENCE_SAMPLE },
+    // Discard story bodies and revision history before multiplying rows.
+    { $project: { keywords: 1 } },
     { $unwind: '$keywords' },
     { $match: { keywords: { $ne: keywordId } } },
     { $group: { _id: '$keywords', sharedStories: { $sum: 1 } } },

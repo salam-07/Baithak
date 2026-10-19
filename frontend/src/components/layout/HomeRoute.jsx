@@ -1,12 +1,17 @@
 import { Navigate, Outlet } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import LandingPage from '../../pages/landing/LandingPage';
+import LoadingState from '../ui/LoadingState';
 import FeedPage from '../../pages/app/FeedPage';
+
+const LandingPage = lazy(() => import('../../pages/landing/LandingPage'));
 
 // Resolve the session before choosing a home so returning readers never flash the landing.
 export function HomeRoute() {
   const { user, status, restoreError } = useAuth();
-  return status === 'ready' && !restoreError && !user ? <LandingPage /> : <Outlet />;
+  return status === 'ready' && !restoreError && !user
+    ? <Suspense fallback={<LoadingState label="startingApp" />}><LandingPage /></Suspense>
+    : <Outlet />;
 }
 
 // Retain public browsing and old links; signed-in readers have one canonical feed URL.
