@@ -1,5 +1,5 @@
 /* Available before the JavaScript bundle, using the app's paper and ink. */
-#startup-splash { position: fixed; inset: 0; z-index: 10000; display: grid; place-items: center; padding: 24px; box-sizing: border-box; background: #f5efe3; color: #302b23; }
+#startup-splash, .startup-splash { position: fixed; inset: 0; z-index: 10000; display: grid; place-items: center; padding: 24px; box-sizing: border-box; background: #f5efe3; color: #302b23; }
 .startup-center { width: min(320px, 72vw); text-align: center; }
 .startup-logo { display: block; width: 100%; height: auto; animation: baithak-breathe 1800ms ease-in-out infinite; }
 .startup-help { margin-top: 32px; font: 14px/1.7 system-ui, sans-serif; }

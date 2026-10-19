@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import LoadingState from '../ui/LoadingState';
+import StartupLoading from '../ui/StartupLoading';
 import FeedPage from '../../pages/app/FeedPage';
 
 const LandingPage = lazy(() => import('../../pages/landing/LandingPage'));
@@ -10,7 +10,7 @@ const LandingPage = lazy(() => import('../../pages/landing/LandingPage'));
 export function HomeRoute() {
   const { user, status, restoreError } = useAuth();
   return status === 'ready' && !restoreError && !user
-    ? <Suspense fallback={<LoadingState label="startingApp" />}><LandingPage /></Suspense>
+    ? <Suspense fallback={<StartupLoading />}><LandingPage /></Suspense>
     : <Outlet />;
 }
 
