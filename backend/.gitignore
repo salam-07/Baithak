@@ -42,6 +42,7 @@ src/scripts/*
 !src/scripts/seed-folklore.js
 !src/scripts/verify-folklore.js
 !src/data/folklore/corpus.test.js
+*.test.js
 
 FOLKLORE.md
 src/data/folklore
