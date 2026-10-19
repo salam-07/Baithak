@@ -37,3 +37,6 @@ Thumbs.db
 
 # Local folklore seed preservation fingerprints and audit reports
 .folklore-qa/
+backend/src/services/reading-performance.test.js
+backend/src/utils/cache.test.js
+backend/src/utils/cache.test.js

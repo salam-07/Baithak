@@ -30,6 +30,12 @@ KEYWORDS.md
 *.test.js
 scripts
 test-helpers
+# Keep read-performance regression coverage with the implementation.
+!src/utils/cache.test.js
+!src/services/reading-performance.test.js
+!src/test-helpers/
+src/test-helpers/*
+!src/test-helpers/env.js
 # Keep the additive folklore seed and its regression checks reviewable.
 !src/scripts/
 src/scripts/*
