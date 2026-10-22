@@ -1,4 +1,5 @@
 import { textFor, scriptProps } from '../../lib/storyText';
+import CuratedBadge from './CuratedBadge';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
 import { errorMessage } from '../../lib/api';
@@ -22,7 +23,7 @@ export function StoryCard({ story }) {
   const { t, contentPreference } = useLanguage();
   const text = textFor(story, contentPreference);
   return <article className="story-card">
-    <div className="story-meta">{story.status === 'draft' ? <span>{t('draft')}</span> : story.publishedAt && <time dateTime={story.publishedAt}>{new Date(story.publishedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</time>}</div>
+    <div className="story-meta"><CuratedBadge story={story} />{story.status === 'draft' ? <span>{t('draft')}</span> : story.publishedAt && <time dateTime={story.publishedAt}>{new Date(story.publishedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</time>}</div>
     <Link className="story-open" to={story.status === 'draft' ? `/app/write/${story.id}` : `/app/stories/${story.id}`} {...scriptProps(text)}><h2>{text?.title}</h2><p>{text?.excerpt}</p></Link>
     <Link className="text-link" to={story.status === 'draft' ? `/app/write/${story.id}` : `/app/stories/${story.id}`}>{t(story.status === 'draft' ? 'continueDraft' : 'readStory')}</Link>
   </article>;

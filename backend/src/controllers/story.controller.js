@@ -21,8 +21,8 @@ import * as storyService from '../services/story.service.js';
 
 /** The listing filters, as the validator produced them. */
 function listingFilters(query) {
-  const { keyword, language, author, search } = query;
-  return { keyword, language, author, search };
+  const { keyword, language, author, search, curated } = query;
+  return { keyword, language, author, search, curated };
 }
 
 export const createStory = asyncHandler(async (req, res) => {

@@ -7,6 +7,7 @@ import Icon from '../ui/Icon';
 const destinations = [
   { name: 'create', to: '/app/write' },
   { name: 'feed', to: '/app' },
+  { name: 'curated', to: '/app/curated' },
   { name: 'keywords', to: '/app/keywords' },
   { name: 'search', to: '/app/search' },
   { name: 'translation', to: '/app/translation' },
@@ -24,7 +25,7 @@ export default function Navigation() {
   const popup = useRef(null);
   const popupId = useId();
   const [menuOpen, setMenuOpen] = useState(false);
-  const secondaryActive = pathname.startsWith('/app/translation') || pathname.startsWith('/app/profile');
+  const secondaryActive = ['/app/translation', '/app/profile', '/app/search'].some(path => pathname.startsWith(path));
   useEffect(() => {
     const panel = popup.current;
     panel?.hidePopover();
@@ -60,12 +61,12 @@ export default function Navigation() {
         : name === 'keywords'
           ? pathname === to || pathname === '/app/explore' || pathname.startsWith('/app/words/') || pathname.startsWith('/app/keywords/')
           : pathname === to || pathname.startsWith(`${to}/`);
-      return <Link className={`nav-link${active ? ' active' : ''}${name === 'create' ? ' nav-create' : ''}${['translation', 'profile'].includes(name) ? ' nav-secondary' : ''}`} data-destination={name} aria-current={active ? 'page' : undefined} key={name} to={name === 'feed' && user ? '/' : to}>
+      return <Link className={`nav-link${active ? ' active' : ''}${name === 'create' ? ' nav-create' : ''}${['search', 'translation', 'profile'].includes(name) ? ' nav-secondary' : ''}`} data-destination={name} aria-current={active ? 'page' : undefined} key={name} to={name === 'feed' && user ? '/' : to}>
         <span className="nav-icon"><Icon name={name === 'create' ? 'write' : name === 'keywords' ? 'book' : name === 'translation' ? 'language' : name} /></span><span className="nav-label">{t(name)}</span>
       </Link>;
     })}
     <div ref={popup} id={popupId} popover="auto" className="nav-popup" onToggle={event => setMenuOpen(event.newState === 'open')}>
-      {destinations.filter(({ name }) => ['translation', 'profile'].includes(name)).map(({ name, to }) => <Link
+      {destinations.filter(({ name }) => ['search', 'translation', 'profile'].includes(name)).map(({ name, to }) => <Link
         key={name} to={to} className="nav-popup-link" aria-current={pathname.startsWith(to) ? 'page' : undefined}
         onClick={() => popup.current?.hidePopover()}>
         <Icon name={name === 'translation' ? 'language' : name} /><span>{t(name)}</span>

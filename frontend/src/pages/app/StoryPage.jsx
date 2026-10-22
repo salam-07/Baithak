@@ -1,4 +1,5 @@
 import { textFor, scriptProps } from '../../lib/storyText';
+import CuratedBadge from '../../components/stories/CuratedBadge';
 import { useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
@@ -36,7 +37,7 @@ function Reading({ story }) {
   }
   const owner = user?.id === story.author?._id;
   return <><PageHeading title={text.title} titleContent={<KeywordText text={text.title} spans={annotationsFor(story, text).title} story={story} />} textProps={scriptProps(text)} />
-    <div className="reader-byline"><span dir="auto">{story.author?.name || story.author?.username}</span>{story.publishedAt && <time dateTime={story.publishedAt}>{new Date(story.publishedAt).toLocaleDateString()}</time>}{story.status === 'draft' && <span>{t('draft')}</span>}</div>
+    <div className="reader-byline"><CuratedBadge story={story} /><span dir="auto">{story.author?.name || story.author?.username}</span>{story.publishedAt && <time dateTime={story.publishedAt}>{new Date(story.publishedAt).toLocaleDateString()}</time>}{story.status === 'draft' && <span>{t('draft')}</span>}</div>
     {story.texts.length > 1 && <div className="reader-versions">{story.texts.map(item => <button key={`${item.language}-${item.script}`} aria-pressed={text === item} onClick={() => setChosen(`${item.language}-${item.script}`)}>{item.script === 'shahmukhi' ? 'پنجابی' : item.language === 'pa' ? 'Roman Punjabi' : 'English'}</button>)}</div>}
     {!preferredAvailable && <p className="content-note">{t('originalAvailable')}</p>}
     {!text.isOriginal && <p className="content-note">{t(text.source === 'community' ? 'communityTranslation' : 'authorTranslation')}</p>}

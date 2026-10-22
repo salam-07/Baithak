@@ -10,6 +10,7 @@ import { HomeRoute, LegacyFeedRoute } from './components/layout/HomeRoute';
 import AuthPage from './pages/auth/AuthPage';
 import OnboardingPage from './pages/auth/OnboardingPage';
 import FeedPage from './pages/app/FeedPage';
+import CuratedPage from './pages/app/CuratedPage';
 import ExplorePage, { WordPage, WordCreatePage } from './pages/app/ExplorePage';
 import CreatePage from './pages/app/CreatePage';
 import StoryPage from './pages/app/StoryPage';
@@ -38,6 +39,7 @@ export default function App() {
     <Route element={<AuthGate onboarding />}><Route path="onboarding" element={<OnboardingPage />} /></Route>
     <Route element={<AuthGate allowGuest />}>
     <Route path="app" element={<AppLayout />}>
+      <Route path="curated" element={<CuratedPage />} />
       <Route index element={<LegacyFeedRoute />} />
       <Route path="feed" element={<FeedPage />} /><Route path="stories/:id" element={<StoryPage />} /><Route path="keywords/new" element={<WordCreatePage />} /><Route path="words/:key" element={<WordPage />} /><Route path="explore" element={<ExplorePage />} /><Route path="keywords" element={<ExplorePage />} /><Route path="translation" element={<PlaceholderPage page="translation" />} />
       <Route path="search" element={<ExplorePage searchOnly />} /><Route path="profile" element={<ProfilePage />} /><Route path="profile/settings" element={<SettingsPage />} /><Route path="settings" element={<Navigate to="/app/profile/settings" replace />} />

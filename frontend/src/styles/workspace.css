@@ -165,7 +165,7 @@
   .application-ui.baithak-shell [data-destination="feed"] { order: 0; }
   .application-ui.baithak-shell .nav-create { order: 2; margin: 0; }
   .application-ui.baithak-shell [data-destination="keywords"] { order: 1; }
-  .application-ui.baithak-shell [data-destination="search"] { order: 3; }
+  .application-ui.baithak-shell [data-destination="curated"] { order: 3; }
   .application-ui.baithak-shell .nav-create { background: transparent; color: var(--muted); }
   .application-ui.baithak-shell .nav-create:hover:not(.active) { background: var(--surface); color: var(--clay); }
   .application-ui.baithak-shell .nav-create.active,

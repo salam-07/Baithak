@@ -105,21 +105,12 @@ const storySchema = new Schema(
           message: 'A story needs at least one version.',
         },
         {
-          // Two variants in the same language would make "show me the Punjabi"
-          // ambiguous and would quietly overwrite one of them at render time.
-          validator: (texts) => new Set(texts.map((t) => t.language)).size === texts.length,
-          message: 'A story cannot have two versions in the same language.',
-        },
-        {
           validator: (texts) => texts.filter((t) => t.isOriginal).length === 1,
           message: 'Exactly one version must be marked as the original.',
         },
         {
-          // Language and script are independent, but not arbitrary: the default
-          // script for a language is the one a reader expects, and pairing
-          // Punjabi with `latin` while English also claims `latin` produces two
-          // variants that render identically in the feed. Roman Punjabi is a
-          // legitimate pairing and stays allowed.
+          // Shahmukhi and Roman Punjabi coexist; only duplicate language/script
+          // pairs are ambiguous to the reader and annotation lookup.
           validator: (texts) => {
             const pairings = texts.map((t) => `${t.language}:${t.script}`);
             return new Set(pairings).size === pairings.length;
@@ -180,6 +171,19 @@ const storySchema = new Schema(
       },
     },
 
+    // Editorial designation; never accepted from ordinary author endpoints.
+    isCurated: {
+      type: Boolean, default: false,
+      validate: {
+        validator: function (value) {
+          if (!value) return true;
+          const variants = new Set(this.texts.map(text => `${text.language}:${text.script}`));
+          return ['en:latin', 'pa:shahmukhi', 'pa:roman'].every(pair => variants.has(pair));
+        },
+        message: 'Curated stories need English, Shahmukhi, and Roman Punjabi versions.',
+      },
+    },
+
     status: {
       type: String,
       enum: { values: STORY_STATUSES, message: '{VALUE} is not a valid status.' },
@@ -229,6 +233,7 @@ const storySchema = new Schema(
 // The default feed: published stories, newest first, `_id` as tie-breaker so
 // that two stories sharing a timestamp still have a total order to paginate on.
 storySchema.index({ status: 1, publishedAt: -1, _id: -1 });
+storySchema.index({ status: 1, isCurated: 1, publishedAt: -1, _id: -1 });
 
 
 // Keyword pages and the affinity feed's candidate generation.
@@ -357,6 +362,7 @@ storySchema.methods.toCard = function toCard({ excerptLength = 240 } = {}) {
 
   return {
     id: this._id,
+    isCurated: this.isCurated === true,
     author: this.author,
     languageMode: this.languageMode,
     texts: (this.texts ?? []).map((text) => ({

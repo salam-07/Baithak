@@ -82,7 +82,7 @@ function prepareTexts(texts = []) {
  * document from the first write, rather than being patched in afterwards by a
  * second update that could fail and leave a story permanently unindexed.
  */
-export async function createStory({ authorId, texts, status, storyId } = {}) {
+export async function createStory({ authorId, texts, status, storyId, isCurated = false, publishedAt } = {}) {
   const prepared = prepareTexts(texts);
 
   const { keywordIds, terms } = await extractForStory({ texts: prepared });
@@ -90,6 +90,7 @@ export async function createStory({ authorId, texts, status, storyId } = {}) {
   const story = new Story({
     ...(storyId ? { _id: storyId } : {}),
     author: authorId,
+    isCurated,
     texts: prepared,
     keywords: keywordIds.slice(0, MAX_KEYWORDS_PER_STORY),
     terms: terms.map((entry) => entry.term),
@@ -100,7 +101,8 @@ export async function createStory({ authorId, texts, status, storyId } = {}) {
   // story that is actually being published gets a publication time, and an
   // edit later never resets it.
   const isPublished = story.status === STORY_STATUS.PUBLISHED;
-  if (isPublished) story.publishedAt = new Date();
+  // Date and editorial status are internal seed inputs, never forwarded by the author controller.
+  if (isPublished) story.publishedAt = publishedAt ?? new Date();
 
   await story.save();
 
@@ -253,8 +255,10 @@ export async function deleteStory({ storyId, userId, isAdmin = false } = {}) {
  * an unpublished story must not be reachable by guessing an id or by passing a
  * status filter.
  */
-function buildPublicFilter({ keyword, language, author, search, excludeIds } = {}) {
+function buildPublicFilter({ keyword, language, author, search, excludeIds, curated } = {}) {
   const filter = { status: STORY_STATUS.PUBLISHED };
+  if (curated === true) filter.isCurated = true;
+  if (curated === false) filter.isCurated = { $ne: true };
 
 
   if (keyword) {

@@ -33,6 +33,7 @@ export const CARD_PIPELINE_STAGES = [
   {
     $project: {
       author: 1,
+      isCurated: 1,
       languages: 1,
 
       // `keywords` is deliberately absent. The stored field is a list of ids that no
@@ -100,6 +101,7 @@ export function toStoryCard(row) {
 
   return {
     id: row._id,
+    isCurated: row.isCurated === true,
     author: row.author,
     // Derived rather than stored, matching the model's `languageMode` virtual,
     // so the two can never disagree about what "both" means.

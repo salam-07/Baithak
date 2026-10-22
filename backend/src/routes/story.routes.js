@@ -8,7 +8,9 @@ const storyKeywordSettingsSchema = z.object({ revision: z.number().int().min(1),
 import { Router } from 'express';
 
 import validate from '../middlewares/validate.js';
-import { requireAuth, optionalAuth } from '../middlewares/auth.js';
+import { requireAuth, optionalAuth, requireRole } from '../middlewares/auth.js';
+import { Story } from '../models/index.js';
+import ApiError from '../utils/ApiError.js';
 import * as storyController from '../controllers/story.controller.js';
 import {
   createStorySchema,
@@ -36,6 +38,17 @@ import {
  */
 
 const router = Router();
+
+router.patch('/:storyId/curation', requireAuth, requireRole('editor', 'admin'),
+  validate({ params: storyIdParamSchema, body: z.object({ isCurated: z.boolean() }).strict() }),
+  asyncHandler(async (req, res) => {
+    const story = await Story.findById(req.params.storyId);
+    if (!story) throw ApiError.notFound('Story');
+    if (req.body.isCurated && story.status !== 'published') throw ApiError.validation('Only published stories can be curated.');
+    story.isCurated = req.body.isCurated;
+    await story.save();
+    return sendSuccess(res, { id: story._id, isCurated: story.isCurated });
+  }));
 
 router.put('/:storyId/keywords', requireAuth, validate({ params: storyIdParamSchema, body: storyKeywordSettingsSchema }), asyncHandler(async (req, res) => {
   return sendSuccess(res, await saveStoryKeywords({ storyId: req.params.storyId, userId: req.auth.userId, ...req.body }));

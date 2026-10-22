@@ -1,4 +1,5 @@
 import LoadingState from '../ui/LoadingState';
+import CuratedBadge from './CuratedBadge';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -74,6 +75,7 @@ const StageCard = memo(function StageCard({ story, index, failure, onOpen, onPre
     >
       <div className="feed-card-body">
         <div className="feed-card-head">
+          <CuratedBadge story={story} />
           {draft
             ? <span>{t('draft')}</span>
             : story.publishedAt && <time dateTime={story.publishedAt}>{new Date(story.publishedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</time>}

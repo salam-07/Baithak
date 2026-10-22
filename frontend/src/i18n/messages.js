@@ -1,6 +1,8 @@
 import content from './content';
 // Keep interface copy together. Punjabi is Shahmukhi; Roman Punjabi is Punjabi in Latin script.
 const copy = { ...content,
+  curated: ['Curated', 'چُنیاں ہوئیاں کہانیاں', 'Chunni Hui Kahania'],
+  curatedDescription: ["Stories selected by Baithak’s editorial team.", 'بیٹھک دی اداراتی ٹیم دیاں چُنیاں ہوئیاں کہانیاں۔', 'Baithak di idarati team dian chunni hoiyan kahanian.'],
   createTranslationNote: ["Baithak’s admin manually adds translations after publication, without relying on AI; credited community translations are coming soon.", "کہانی شائع ہون توں کجھ چِر بعد بیٹھک دا ایڈمن AI اُتے بھروسہ کیتے بغیر ترجمے آپ شامل کردا اے؛ چھیتی تسی وی اپنے ناں دے کریڈٹ نال ترجمے وچ حصہ پا سکو گے۔", "Kahani shaya hon ton kujh chir baad Baithak da admin AI utte bharosa keete baghair tarjume aap shamil karda ae; chheti tusi vi apne naa de credit naal tarjume vich hissa pa sako ge."],
   aboutTranslations: ["About translations", "ترجمیاں بارے", "Tarjumeyan bare"],
 

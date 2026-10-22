@@ -18,7 +18,7 @@ import '../../styles/discovery.css';
  * and hands it a fixed height; `feed-route` in workspace.css carries the
  * arithmetic and stage.css carries the deck.
  */
-const DECK_ROUTES = ['/', '/app', '/app/feed'];
+const DECK_ROUTES = ['/', '/app', '/app/feed', '/app/curated'];
 
 export default function AppLayout() {
   const { t } = useLanguage();

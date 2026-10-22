@@ -5,6 +5,7 @@ import {
   SCRIPTS,
   TEXT_SOURCES,
   STORY_STATUS,
+  DEFAULT_SCRIPT_BY_LANGUAGE,
 } from '../config/constants.js';
 import { objectId, searchTerm, languageList, paginationShape } from './common.validator.js';
 
@@ -64,8 +65,8 @@ const texts = z
     message: 'Mark exactly one version as the original.',
   })
   .refine(
-    (variants) => new Set(variants.map((variant) => variant.language)).size === variants.length,
-    { message: 'A story cannot have two versions in the same language.' },
+    (variants) => new Set(variants.map((variant) => `${variant.language}:${variant.script ?? DEFAULT_SCRIPT_BY_LANGUAGE[variant.language]}`)).size === variants.length,
+    { message: 'A story cannot have two versions in the same language and script.' },
   );
 
 
@@ -101,6 +102,7 @@ export const updateStorySchema = z
  * spells that as `?language=en,pa`.
  */
 export const listStoriesQuerySchema = z.object({
+  curated: z.enum(['true', 'false']).transform(value => value === 'true').optional(),
   ...paginationShape,
 
 

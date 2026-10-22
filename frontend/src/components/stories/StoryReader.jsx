@@ -1,4 +1,5 @@
 import LoadingState from '../ui/LoadingState';
+import CuratedBadge from './CuratedBadge';
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
@@ -180,7 +181,7 @@ export default function StoryReader({ card, origin, reaction, onLike, onClose })
 
             {/* The card cannot carry a byline — the listing does not populate the
                 author — so this is the first place the reader sees who wrote it. */}
-            {author && <div className="reader-byline"><span dir="auto">{author}</span></div>}
+            <div className="reader-byline"><CuratedBadge story={source} />{author && <span dir="auto">{author}</span>}</div>
 
             {texts.length > 1 && <div className="reader-versions">{texts.map((item) => <button key={`${item.language}-${item.script}`} type="button" aria-pressed={text === item} onClick={() => setChosen(`${item.language}-${item.script}`)}>{item.script === 'shahmukhi' ? 'پنجابی' : item.language === 'pa' ? 'Roman Punjabi' : 'English'}</button>)}</div>}
             {text && !preferredAvailable && <p className="content-note">{t('originalAvailable')}</p>}

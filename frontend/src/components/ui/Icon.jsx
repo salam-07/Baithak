@@ -1,4 +1,5 @@
 const paths = {
+  curated: 'M6 3h12v18l-6-4-6 4z M9 9l2 2 4-4',
   menu: 'M4 6h16 M4 12h16 M4 18h16',
   search: 'M19 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0 M15 15l6 6',
   feed: 'M4 4h16v16H4z M8 8h8 M8 12h8 M8 16h5',
