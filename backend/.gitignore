@@ -36,13 +36,16 @@ test-helpers
 !src/test-helpers/
 src/test-helpers/*
 !src/test-helpers/env.js
-# Keep the additive folklore seed and its regression checks reviewable.
+# Operational scripts stay local; source tests are explicitly allowed below.
 !src/scripts/
 src/scripts/*
-!src/scripts/seed-folklore.js
-!src/scripts/verify-folklore.js
-!src/data/folklore/corpus.test.js
 *.test.js
 
 FOLKLORE.md
-src/data/folklore
+# Seed payloads and provenance are local maintenance artifacts, not app source.
+/src/data/folklore/
+/src/data/curated/
+/src/data/seedDemo.js
+/src/data/seedKeywords.js
+/CURATED.md
+!src/models/curated.test.js
