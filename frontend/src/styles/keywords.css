@@ -29,7 +29,11 @@
   scrollbar-width: thin; scrollbar-color: #9c896a #faf6ed;
 }
 .keyword-popover-head { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
-.keyword-name { display: block; font: 500 32px/1.2 'Bodoni Moda', Georgia, serif; overflow-wrap: anywhere; min-width: 0; }
+.keyword-names { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: center; gap: 12px; flex: 1; min-width: 0; }
+.keyword-names > .keyword-name:only-child { grid-column: 1 / -1; }
+.keyword-name { display: block; font: 500 32px/1.2 'Bodoni Moda', Georgia, serif; overflow-wrap: anywhere; min-width: 0; text-align: start; }
+.keyword-alternates { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.keyword-alternate { display: block; font: 400 15px/1.5 'Manrope', sans-serif; color: #665c4d; overflow-wrap: anywhere; text-align: start; }
 .keyword-popover button { font: inherit; color: #743d2d; border: 0; border-radius: 0; background: transparent; cursor: pointer; }
 .keyword-popover .keyword-dismiss { display: grid; place-items: center; flex: 0 0 44px; width: 44px; height: 44px; margin: -10px -10px 0 0; padding: 0; }
 .keyword-dismiss:hover { background: #eee1c8; }
@@ -40,7 +44,7 @@
 /* The whole tooltip is the way through to the word; its own controls ride above. */
 .keyword-popover .keyword-open { position: absolute; inset: 0; z-index: 1; }
 .keyword-popover :is(.keyword-dismiss, .keyword-choice-list button) { position: relative; z-index: 2; }
-.keyword-popover:dir(rtl) .keyword-dismiss { margin: -10px 0 0 -10px; }
+.keyword-popover-head:dir(rtl) .keyword-dismiss { margin: -10px 0 0 -10px; }
 .keyword-fallback { display: block; color: #665c4d; font-size: 12px; margin-top: 8px; }
 .keyword-choices { display: block; margin-top: 12px; }
 .keyword-choices-label { display: block; color: #665c4d; font-size: 12px; }
@@ -51,6 +55,8 @@
 .keyword-popover ::selection { color: #302b23; background: #e5d2ae; }
 .keyword-popover:lang(pa-Arab), .keyword-popover [lang="pa-Arab"] { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.2; letter-spacing: normal; }
 .keyword-popover .keyword-name[lang="en"], .keyword-popover .keyword-name[lang="pa-Latn"] { font-family: 'Bodoni Moda', Georgia, serif; line-height: 1.2; }
+.keyword-popover .keyword-alternate[lang="pa-Arab"] { font-size: 18px; }
+.keyword-popover .keyword-alternate[lang="en"], .keyword-popover .keyword-alternate[lang="pa-Latn"] { font-family: 'Manrope', sans-serif; line-height: 1.5; }
 .keyword-popover .keyword-explanation[lang="en"], .keyword-popover .keyword-explanation[lang="pa-Latn"] { font-family: 'Manrope', sans-serif; line-height: 1.65; }
 
 /* The word is the title; rules divide meaning, evidence and discovery. */
@@ -91,6 +97,8 @@
 @media (max-width: 680px) {
   .keyword-popover-surface { padding: 16px; }
   .keyword-name { font-size: 27px; }
+  .keyword-alternate { font-size: 14px; }
+  .keyword-popover .keyword-alternate[lang="pa-Arab"] { font-size: 17px; }
   .keyword-category { margin: 4px 0 10px; }
   .keyword-choices { margin-top: 8px; }
   .application-ui.baithak-shell .word-entry-hero .page-heading h1 { font-size: clamp(48px, 14vw, 72px); line-height: 1.08; }

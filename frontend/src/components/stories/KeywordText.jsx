@@ -17,6 +17,9 @@ function KeywordTip({ children, words, story, hoverOnly }) {
   const [selected, setSelected] = useState(0);
   const current = words[selected] || words[0];
   const name = keywordText(current.labels, locale, current.key);
+  const alternatives = ['en', 'pa', 'roman']
+    .filter(language => language !== name.language && current.labels?.[language]?.trim())
+    .map(language => keywordText(current.labels, language));
   const openLabel = name.text + ' — ' + t('keywordLearn');
   function restoreFocus() { suppressFocus.current = true; anchor.current?.focus({ preventScroll: true }); suppressFocus.current = false; }
   // Only a mark that is a control can be expanded or controlled; in the closed card it
@@ -140,8 +143,13 @@ function KeywordTip({ children, words, story, hoverOnly }) {
       onPointerEnter={() => clearTimeout(timer.current)} onPointerLeave={leave} onBlur={leave}>
       <Link className="keyword-open" to={'/app/words/' + current.key} aria-label={openLabel} />
       <span className="keyword-popover-surface">
-        <span className="keyword-popover-head">
-          <span className="keyword-name" id={id + '-name'} role="heading" aria-level="2" lang={name.lang} dir={name.dir}>{name.text}</span>
+        <span className="keyword-popover-head" dir={locale === 'pa' ? 'rtl' : 'ltr'}>
+          <span className="keyword-names">
+            <span className="keyword-name" id={id + '-name'} role="heading" aria-level="2" lang={name.lang} dir={name.dir}>{name.text}</span>
+            {alternatives.length > 0 && <span className="keyword-alternates">
+              {alternatives.map(label => <span className="keyword-alternate" key={label.language} lang={label.lang} dir={label.dir}>{label.text}</span>)}
+            </span>}
+          </span>
           <button className="keyword-dismiss" type="button" aria-label={t('keywordClose')} onClick={() => { close(); restoreFocus(); }}>
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
           </button>
