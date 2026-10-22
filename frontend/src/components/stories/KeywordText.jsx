@@ -47,7 +47,7 @@ function KeywordTip({ children, words, story, hoverOnly }) {
     panel.dataset.detached = box.bottom < ceiling || box.top > bottom ? 'true' : 'false';
     const available = Math.max(80, bottom - ceiling);
     panel.style.width = Math.min(mobile ? 296 : 360, width - 24) + 'px';
-    const surface = panel.firstElementChild;
+    const surface = panel.querySelector('.keyword-popover-surface');
     // offsetHeight ignores the entrance transform, so scrolling cannot make it drift.
     const panelHeight = Math.min(surface.scrollHeight + 2, mobile ? 360 : 480, available);
     const panelWidth = panel.offsetWidth;
@@ -106,7 +106,7 @@ function KeywordTip({ children, words, story, hoverOnly }) {
     const panel = tip.current;
     const viewport = window.visualViewport;
     const observer = new ResizeObserver(position);
-    observer.observe(panel.firstElementChild);
+    observer.observe(panel.querySelector('.keyword-popover-surface'));
     window.addEventListener('resize', position);
     window.addEventListener('scroll', position, true);
     viewport?.addEventListener('resize', position);
@@ -160,7 +160,7 @@ function KeywordTip({ children, words, story, hoverOnly }) {
           return <span className="keyword-meaning" key={word._id} hidden={index !== selected}>
             <span className="keyword-category">{t('keywordType_' + word.type)}{override ? ' · ' + t('keywordInStory') : ''}</span>
             <span className="keyword-explanation" dir={override ? 'auto' : note.dir} lang={override ? undefined : note.lang}>{override || keywordPreview(note.text, 190)}</span>
-            {!override && note.language && note.language !== locale && <span className="keyword-fallback">{t('keywordFallback_' + note.language)}</span>}
+            {/* {!override && note.language && note.language !== locale && <span className="keyword-fallback">{t('keywordFallback_' + note.language)}</span>} */}
           </span>;
         })}
         {words.length > 1 && <span className="keyword-choices" role="group" aria-label={t('keywordOverlap')}>
