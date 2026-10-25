@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import useLandingMotion from '../../components/landing/useLandingMotion';
 import Navbar from '../../components/landing/Navbar';
 import Hero from '../../components/landing/Hero';
+import LandingMusic from '../../components/landing/LandingMusic';
 import '@fontsource/manrope/400.css';
 import '@fontsource/manrope/600.css';
 import '@fontsource/bodoni-moda/500.css';
@@ -20,6 +21,7 @@ export default function LandingPage() {
     <div ref={root} className="landing" id="top">
       <a className="skip-link" href="#our-purpose">Skip to content / اگے پڑھو</a>
       <Navbar />
+      <LandingMusic />
       <main>
         <Hero />
         <section className="purpose section-shell" id="our-purpose" aria-labelledby="purpose-title">

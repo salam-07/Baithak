@@ -180,3 +180,25 @@ body { margin: 0; }
 @media (prefers-reduced-motion: reduce) {
   .purpose-copy::before, .feature-row::before, .promise-copy::before { transform: none; }
 }
+.landing .landing-music {
+  position: fixed;
+  inset-inline-end: max(20px, env(safe-area-inset-right));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid #9c896a;
+  border-radius: 50%;
+  background: #f5efe3;
+  color: #302b23;
+  cursor: pointer;
+  transition: background-color 160ms ease-out, color 160ms ease-out;
+}
+.landing .landing-music:hover { background: #302b23; color: #f5efe3; }
+.landing .landing-music:focus-visible { outline: 2px solid #874632; outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  .landing .landing-music { transition: none; }
+}
