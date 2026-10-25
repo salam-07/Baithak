@@ -19,6 +19,9 @@
 .application-ui.baithak-shell .keyword-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 18px; }
 .application-ui.baithak-shell .keyword-card { display: flex; flex-direction: column; min-width: 0; padding: 25px 24px 18px; background: var(--definition-paper); border: 1px solid var(--definition-rule); text-decoration: none; color: var(--ink); transition: border-color 180ms ease-out, background-color 180ms ease-out; }
 .application-ui.baithak-shell .keyword-card h2 { margin: 0; font: 500 32px/1.2 'Bodoni Moda', Georgia, serif; letter-spacing: -.02em; overflow-wrap: anywhere; }
+.application-ui.baithak-shell .keyword-card-alternates { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; margin-top: 10px; }
+.application-ui.baithak-shell .keyword-card-alternates > span { min-width: 0; max-width: 100%; font: 400 14px/1.6 'Manrope', sans-serif; color: var(--muted); overflow-wrap: anywhere; unicode-bidi: isolate; }
+.application-ui.baithak-shell .keyword-card-alternates > span[lang="pa-Arab"] { font: 400 18px/2.2 'Noto Nastaliq Urdu', serif; }
 .application-ui.baithak-shell .keyword-card-category { margin: 8px 0 18px; font-size: 12px; color: var(--muted); }
 .application-ui.baithak-shell .keyword-card-definition { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; margin: 0 0 24px; font: 400 14px/1.8 'Manrope', sans-serif; overflow-wrap: anywhere; }
 .application-ui.baithak-shell .keyword-card-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: auto; padding-top: 14px; border-top: 1px solid var(--rule); color: var(--clay); font-size: 12px; }

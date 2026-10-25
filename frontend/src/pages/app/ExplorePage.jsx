@@ -15,9 +15,15 @@ function Directory({ path, filtered }) {
   return <>
     <div className="keyword-grid">{resource.data?.map(item => {
       const name = keywordText(item.labels, locale, item.key);
+      const alternatives = ['en', 'pa', 'roman']
+        .filter(language => language !== name.language && item.labels?.[language]?.trim())
+        .map(language => keywordText(item.labels, language));
       const note = keywordText(item.notes, locale, t('noWordNote'));
       return <Link className="keyword-card" key={item.id || item.key} to={'/app/words/' + encodeURIComponent(item.key)}>
         <h2 lang={name.lang} dir={name.dir}>{name.text}</h2>
+        {alternatives.length > 0 && <span className="keyword-card-alternates">
+          {alternatives.map(label => <span key={label.language} lang={label.lang} dir={label.dir}>{label.text}</span>)}
+        </span>}
         <span className="keyword-card-category">{t('keywordType_' + (item.type || 'word'))}</span>
         <p className="keyword-card-definition" lang={note.lang} dir={note.dir}>{keywordPreview(note.text, 180)}</p>
         <span className="keyword-card-foot"><span>{t('keywordMeaning')}</span><Icon name="arrow" /></span>
@@ -60,6 +66,9 @@ function WordDetail({ wordKey }) {
   const { t, locale } = useLanguage();
   const word = resource.data;
   const name = keywordText(word?.labels, locale, word?.key);
+  const alternatives = ['en', 'pa', 'roman']
+    .filter(language => language !== name.language && word?.labels?.[language]?.trim())
+    .map(language => keywordText(word.labels, language));
   const note = keywordText(word?.notes, locale, t('noWordNote'));
   const hasConnections = Boolean(word?.related?.length || word?.alsoAppearsWith?.length);
   const relations = (items, title) => items?.length > 0 && <div className="word-relation-group"><h3>{t(title)}</h3><div className="word-related-links">{items.map(item => {
@@ -69,6 +78,9 @@ function WordDetail({ wordKey }) {
   return <><ResourceState resource={resource} />{word && <article className="word-entry">
     <div className="word-entry-hero">
       <PageHeading title={name.text} textProps={{ lang: name.lang, dir: name.dir }} />
+      {alternatives.length > 0 && <div className="word-entry-alternates">
+        {alternatives.map(label => <span key={label.language} lang={label.lang} dir={label.dir}>{label.text}</span>)}
+      </div>}
       <p className="word-type">{t('keywordType_' + word.type)}</p>
       <nav className="word-section-nav" aria-label={t('keywordOnPage')}>
         <a href="#word-meaning">{t('keywordMeaning')}</a>
