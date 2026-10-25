@@ -58,7 +58,7 @@ export default {
   onlyOwnStory: ['You can only edit your own stories.', 'تُسی اپنی کہانی ای بدل سکدے او۔', 'Tusi apni kahani ee badal sakde o.'],
   myWriting: ['My writing', 'میریاں لکھتاں', 'Meriyan likhtan'],
   comments: ['Comments', 'تبصرے', 'Tabsiray'],
-  commentsNotOpen: ['Replies are not open yet — we are still building them. An empty box would promise more than we can keep.', 'جواب لکھن دا راہ ہجے کھلیا نئیں — اسی ایہہ ہالے بنا رہے آں۔ خالی ڈبہ اوس توں ودھ وعدہ کردا اے جیہڑا اسی پورا نئیں کر سکدے۔', 'Jawab likhan da raah haje khuleya nai — asi eh haale bana rahe aan. Khali dabba os ton vadh vaada karda ae jehri asi poora nai kar sakde.'],
+  commentsNotOpen: ['Replies are not open yet. we are still building them. Stay tuned to Baithak!', 'جواب لکھن دا راہ ہجے کھلیا نئیں — اسی ایہہ ہالے بنا رہے آں۔ خالی ڈبہ اوس توں ودھ وعدہ کردا اے جیہڑا اسی پورا نئیں کر سکدے۔', 'Jawab likhan da raah haje khuleya nai — asi eh haale bana rahe aan. Khali dabba os ton vadh vaada karda ae jehri asi poora nai kar sakde.'],
   close: ['Close', 'بند کرو', 'Band karo'],
   previousStory: ['Previous story', 'پچھلی کہانی', 'Pichhli kahani'],
   nextStory: ['Next story', 'اگلی کہانی', 'Agli kahani'],

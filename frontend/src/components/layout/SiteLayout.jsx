@@ -5,6 +5,7 @@ import LanguageSwitch from '../ui/LanguageSwitch';
 import Icon from '../ui/Icon';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
+import { useBrowseScroll } from '../../hooks/useBrowseMemory';
 export default function SiteLayout() {
   const { t, language, preferenceNotice } = useLanguage();
   const { status } = useAuth();
@@ -12,6 +13,12 @@ export default function SiteLayout() {
   const inApp = pathname === '/' || pathname === '/app' || pathname.startsWith('/app/');
   const root = useRef(null);
   const header = useRef(null);
+  useBrowseScroll();
+  useEffect(() => {
+    const previous = window.history.scrollRestoration;
+    window.history.scrollRestoration = 'manual';
+    return () => { window.history.scrollRestoration = previous; };
+  }, []);
   useEffect(() => {
     const measure = () => root.current?.style.setProperty('--header-height', `${header.current?.offsetHeight || 80}px`);
     measure();
@@ -20,7 +27,6 @@ export default function SiteLayout() {
     return () => observer.disconnect();
   }, [inApp]);
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
     document.getElementById('page-content')?.focus({ preventScroll: true });
   }, [pathname, status]);
   return <div ref={root} className={`application-ui${inApp ? ' baithak-shell' : ''}`} lang={language.lang} dir={language.dir}>

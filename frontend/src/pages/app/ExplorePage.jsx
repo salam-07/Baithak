@@ -8,6 +8,7 @@ import useResource from '../../hooks/useResource';
 import { Pagination, ResourceState, StoryList } from '../../components/stories/StoryList';
 import Button from '../../components/ui/Button';
 import Icon from '../../components/ui/Icon';
+import { useBrowseMemory } from '../../hooks/useBrowseMemory';
 
 function Directory({ path, filtered }) {
   const resource = useResource(path, true);
@@ -35,7 +36,7 @@ function Directory({ path, filtered }) {
 }
 export default function ExplorePage({ searchOnly = false }) {
   const [params] = useSearchParams();
-  const [seed] = useState(() => Math.floor(Math.random() * 1_000_000));
+  const { seed } = useBrowseMemory();
   return <ExploreContent key={String(searchOnly) + params.toString()} searchOnly={searchOnly} seed={seed} />;
 }
 function ExploreContent({ searchOnly, seed }) {

@@ -17,6 +17,7 @@ import { scrollDeck } from '../../lib/deckScroll';
 import { attachDeckSnap } from '../../lib/deckSnap';
 import { prefetchStory } from '../../lib/storyDetail';
 import useResource from '../../hooks/useResource';
+import { useBrowseScroll } from '../../hooks/useBrowseMemory';
 import { ResourceState } from './StoryList';
 import '../../styles/stage.css';
 
@@ -120,6 +121,7 @@ export default function StoryStage({ path, banner = null }) {
   const stories = resource.data ?? [];
 
   const stage = useRef(null);
+  useBrowseScroll(stage, resource.data !== null);
   const steps = useRef([]);
   const glide = useRef(() => {});
   const openedCard = useRef(null);
