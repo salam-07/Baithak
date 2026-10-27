@@ -8,6 +8,6 @@ export default function CuratedPage() {
   const { seed } = useBrowseMemory();
   return <>
     <PageHeading title={t('curated')} visible={false} />
-    <StoryStage path={`/stories?curated=true&limit=6&seed=${seed}`} banner={<div className="curated-intro"><h1>{t('curated')}</h1><p>{t('curatedDescription')}</p></div>} />
+    <StoryStage hideAuthor path={`/stories?curated=true&limit=6&seed=${seed}`} banner={<div className="curated-intro"><h1>{t('curated')}</h1><p>{t('curatedDescription')}</p></div>} />
   </>;
 }

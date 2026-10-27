@@ -9,6 +9,7 @@ import AuthGate from './components/auth/AuthGate';
 import { HomeRoute, LegacyFeedRoute } from './components/layout/HomeRoute';
 import AuthPage from './pages/auth/AuthPage';
 import OnboardingPage from './pages/auth/OnboardingPage';
+import OnboardingTour from './components/onboarding/OnboardingTour';
 import FeedPage from './pages/app/FeedPage';
 import CuratedPage from './pages/app/CuratedPage';
 import ExplorePage, { WordPage, WordCreatePage } from './pages/app/ExplorePage';
@@ -22,7 +23,7 @@ import './styles/app.css';
 import './pages/auth/auth.css';
 import './styles/refinements.css';
 export default function App() {
-  return <BrowserRouter><AuthProvider><LanguageProvider><StartupBoundary><Routes>
+  return <BrowserRouter><AuthProvider><LanguageProvider><StartupBoundary><OnboardingTour /><Routes>
         <Route path="/" element={<HomeRoute />}>
       <Route element={<SiteLayout />}>
         <Route element={<AuthGate allowGuest />}>

@@ -61,7 +61,7 @@ export async function getPublicProfile({ username } = {}) {
  * yet. Leaving it fixed until that is designed is the smaller problem.
  */
 export async function updateProfile({ userId, updates = {} } = {}) {
-  const allowed = ['name', 'bio', 'location'];
+  const allowed = ['name', 'bio', 'location', 'tourCompleted'];
   const changes = {};
 
   for (const field of allowed) {

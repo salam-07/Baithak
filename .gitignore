@@ -40,3 +40,5 @@ Thumbs.db
 backend/src/services/reading-performance.test.js
 backend/src/utils/cache.test.js
 backend/src/utils/cache.test.js
+backend/src/models/onboarding.test.js
+frontend/tests/onboarding-navigation.test.mjs

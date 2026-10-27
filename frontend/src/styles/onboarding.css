@@ -1,0 +1,49 @@
+.application-ui.baithak-shell.tour-root { position: fixed; inset: 0; z-index: 80; min-height: 0; background: transparent; pointer-events: none; }
+.application-ui.baithak-shell .tour-tip {
+  position: fixed; width: min(368px, calc(100vw - 24px)); margin: 0; padding: 22px;
+  background: #fffcf5; color: #302b23; border: 0; border-radius: 14px;
+  box-shadow: 0 12px 46px #302b2333, 0 3px 10px #302b2314;
+  font: 400 14px/1.75 'Manrope', sans-serif;
+  overflow-y: auto; overscroll-behavior: contain; scrollbar-color: #874632 #f7f2e8;
+  visibility: hidden; isolation: isolate; pointer-events: auto;
+}
+.application-ui.baithak-shell .tour-tip[data-ready="true"] { visibility: visible; }
+.tour-tip::before { content: ''; position: fixed; width: 12px; height: 12px; background: #fffcf5; transform: rotate(45deg); pointer-events: none; }
+.tour-tip[data-side="below"]::before { left: calc(var(--tour-pointer) + 0px); top: -6px; position: absolute; }
+.tour-tip[data-side="above"]::before { left: var(--tour-pointer); bottom: -6px; position: absolute; }
+.tour-tip[data-side="none"]::before, .tour-tip[data-side="right"]::before { display: none; }
+.tour-progress { display: flex; gap: 5px; margin-bottom: 18px; }
+.tour-progress > span { height: 3px; flex: 1; background: #e4dac8; border-radius: 2px; }
+.tour-progress > span[data-filled="true"] { background: #874632; }
+.tour-topline { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+.tour-symbol { color: #874632; display: flex; }
+.tour-symbol svg { width: 21px; height: 21px; }
+.tour-count { color: #665c4d; font-size: 12px; font-variant-numeric: tabular-nums; }
+.tour-tip button { cursor: pointer; font: 600 12px/1.5 'Manrope', sans-serif; min-height: 44px; border: 0; }
+.tour-tip .tour-skip { margin-inline-start: auto; color: #665c4d; background: transparent; padding: 0 4px; text-decoration: underline; text-underline-offset: 4px; }
+.application-ui.baithak-shell .tour-copy h2 { font: 400 28px/1.2 'Playfair Display', Georgia, serif; letter-spacing: -.025em; margin: 0 0 13px; color: #302b23; }
+.application-ui.baithak-shell .tour-copy p { margin: 0; color: #51483b; font-size: 14px; line-height: 1.8; }
+.tour-actions { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 24px; }
+.tour-tip .tour-back { background: transparent; color: #51483b; padding: 8px 4px; }
+.tour-tip .tour-back:disabled { opacity: .4; cursor: default; }
+.tour-tip .tour-next { display: inline-flex; align-items: center; justify-content: center; gap: 16px; background: #3e4737; color: #fffcf5; border-radius: 7px; padding: 12px 18px; }
+.tour-next svg { width: 16px; height: 16px; }
+.tour-tip .tour-next:hover { background: #874632; }
+.tour-tip button:focus-visible, .tour-tip a:focus-visible { outline: 2px solid #874632; outline-offset: 3px; }
+.tour-tip:focus { outline: none; }
+.tour-tip:focus-visible { outline: 2px solid #874632; outline-offset: 4px; }
+.tour-example { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-top: 18px; padding: 14px 16px; background: #f1eadd; border-radius: 8px; }
+.tour-example > span:first-child { font-size: 12px; color: #665c4d; }
+.tour-example .keyword-mark { min-height: 44px; }
+.application-ui.baithak-shell .tour-copy .tour-note { font-size: 12px; line-height: 1.8; margin-top: 16px; padding-top: 14px; border-top: 1px solid #e4dac8; }
+[data-tour-focus] { outline: 2px solid #874632 !important; outline-offset: 5px; }
+.feed-stage[data-tour-focus] { outline-offset: -5px; }
+.tour-root:lang(pa-Arab) .tour-copy h2 { font: 400 25px/2 'Noto Nastaliq Urdu', serif; letter-spacing: normal; }
+.tour-root:lang(pa-Arab) .tour-copy p, .tour-root:lang(pa-Arab) .tour-tip button, .tour-root:lang(pa-Arab) .tour-example { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.2; }
+.tour-root:lang(pa-Arab) .tour-next svg { transform: rotate(180deg); }
+@media (max-width: 680px) {
+  .application-ui.baithak-shell .tour-tip { width: min(344px, calc(100vw - 24px)); padding: 18px; }
+  .application-ui.baithak-shell .tour-copy h2 { font-size: 26px; }
+  .tour-actions { margin-top: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { .tour-tip, .tour-tip * { scroll-behavior: auto; } }

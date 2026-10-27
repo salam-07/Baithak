@@ -114,7 +114,7 @@ function EndsStep({ resource }) {
   );
 }
 
-export default function StoryStage({ path, banner = null }) {
+export default function StoryStage({ path, banner = null, hideAuthor = false }) {
   const { t, contentPreference } = useLanguage();
   const { authorizedRequest } = useAuth();
   const resource = useResource(path, true);
@@ -281,6 +281,7 @@ export default function StoryStage({ path, banner = null }) {
 
       {opened && <StoryReader
         card={opened.story}
+        hideAuthor={hideAuthor}
         origin={opened.origin}
         reaction={reactionOf(opened.story)}
         onLike={appreciate}

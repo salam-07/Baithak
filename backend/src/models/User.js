@@ -32,6 +32,8 @@ const userSchema = new Schema(
 
     // Existing accounts are complete; credential-only signup explicitly sets false.
     onboardingCompleted: { type: Boolean, default: true },
+    // Legacy accounts have already found their way around. Signup opts into the tour.
+    tourCompleted: { type: Boolean, default: true },
 
     username: {
       type: String,
@@ -166,6 +168,7 @@ userSchema.methods.toPrivateProfile = function toPrivateProfile() {
     ...this.toPublicProfile(),
     location: this.location ?? null,
     onboardingCompleted: this.onboardingCompleted !== false,
+    tourCompleted: this.tourCompleted !== false,
     role: this.role,
     status: this.status,
     updatedAt: this.updatedAt,

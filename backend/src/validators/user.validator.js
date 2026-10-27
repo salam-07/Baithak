@@ -40,6 +40,7 @@ export const updateProfileSchema = z
       .transform((value) => (value === '' ? null : value))
       .optional(),
     location: clearableLocation.optional(),
+    tourCompleted: z.literal(true).optional(),
   })
   .refine((body) => Object.keys(body).length > 0, { message: 'Nothing to update.' });
 

@@ -74,6 +74,7 @@ export async function signup({
   const user = new User({
     name: name?.trim() || normalizedUsername,
     onboardingCompleted: Boolean(name?.trim()),
+    tourCompleted: false,
     username: normalizedUsername,
     // Absent rather than empty, so "no location given" is distinguishable from
     // "location given as an empty string" — which matters for whether the

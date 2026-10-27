@@ -1,8 +1,9 @@
 import content from './content';
+import onboarding from './onboarding';
 // Keep interface copy together. Punjabi is Shahmukhi; Roman Punjabi is Punjabi in Latin script.
-const copy = { ...content,
+const copy = { ...content, ...onboarding,
   curated: ['Curated', 'چُنیاں ہوئیاں کہانیاں', 'Chunni Hui Kahania'],
-  curatedDescription: ["Stories selected by Baithak’s editorial team.", 'بیٹھک دی اداراتی ٹیم دیاں چُنیاں ہوئیاں کہانیاں۔', 'Baithak di idarati team dian chunni hoiyan kahanian.'],
+  curatedDescription: ["Longer versions of stories, selected and published by Baithak’s maintainers and editors.", 'کہانیاں دے لمے روپ، بیٹھک دے سنبھالن والیاں تے ایڈیٹراں دے چُنے تے شائع کیتے ہوئے۔', 'Kahanian de lamme roop, Baithak de sambhalan walian te editoran de chunne te shaya keete hoye.'],
   createTranslationNote: ["Baithak’s admin manually adds translations after publication, without relying on AI; credited community translations are coming soon.", "کہانی شائع ہون توں کجھ چِر بعد بیٹھک دا ایڈمن AI اُتے بھروسہ کیتے بغیر ترجمے آپ شامل کردا اے؛ چھیتی تسی وی اپنے ناں دے کریڈٹ نال ترجمے وچ حصہ پا سکو گے۔", "Kahani shaya hon ton kujh chir baad Baithak da admin AI utte bharosa keete baghair tarjume aap shamil karda ae; chheti tusi vi apne naa de credit naal tarjume vich hissa pa sako ge."],
   aboutTranslations: ["About translations", "ترجمیاں بارے", "Tarjumeyan bare"],
 
@@ -10,7 +11,7 @@ const copy = { ...content,
   keywords: ["Keywords","لفظ","Lafz"],
   translation: ["Translation","ترجمہ","Tarjuma"],
   translationSoon: ["Community translations are coming soon", "سانجھے ترجمے چھیتی آ رہے نیں", "Sanjhe tarjume chheti aa rahe ne"],
-  translationCurrent: ["For now, Baithak’s admin manually translates posted stories. Translations become available on each story after a while, with no extra steps for readers. We do this to avoid relying on AI.", "فی الحال بیٹھک دا ایڈمن شائع ہوئیاں کہانیاں دا ترجمہ آپ کردا اے۔ کجھ چِر بعد ترجمے کہانی دے نال مل جاندے نیں؛ پڑھن والیاں نوں وکھرا کجھ نئیں کرنا پیندا۔ ایہہ طریقہ اسیں AI اُتے بھروسہ کرن توں بچن لئی ورتدے آں۔", "Filhaal Baithak da admin shaya hoiyan kahanian da tarjuma aap karda ae. Kujh chir baad tarjume kahani de naal mil jande ne; parhan walian nu vakhra kujh nai karna painda. Eh tareeqa asin AI utte bharosa karan ton bachan layi vartde aan."],
+  translationCurrent: ["Baithak’s team and volunteers translate published stories. Available translations appear alongside each story, ready for readers to choose.", "بیٹھک دی ٹیم تے رضاکار شائع ہوئیاں کہانیاں دے ترجمے کردے نیں۔ تیار ترجمے کہانی دے نال ملدے نیں، پڑھن والے اپنی مرضی نال چُن سکدے نیں۔", "Baithak di team te razakar shaya hoian kahanian de tarjume karde ne. Tiyar tarjume kahani de naal milde ne, parhan wale apni marzi naal chun sakde ne."],
   translationCommunity: ["Soon, you’ll be able to contribute translations through a community translation system, with credit for your work, to help bring Punjabi stories to more readers.", "چھیتی تسی سانجھے ترجمے دے نظام راہیں اپنا حصہ پا سکو گے۔ تہاڈے کم دا کریڈٹ تہانوں ملے گا، تے پنجابی کہانیاں ہور پڑھن والیاں تک پہنچ سکن گیاں۔", "Chheti tusi sanjhe tarjume de nizam raahin apna hissa pa sako ge. Tuhade kam da credit tuhanu mile ga, te Punjabi kahanian hor parhan walian tak pahunch sakan gian."],
   translationContact: ["Want to contribute in the meantime? Send us a message:", "اوہدوں تک حصہ پانا چاہندے او؟ سانوں پیغام بھیجو:", "Ohdon tak hissa pauna chahnde o? Sanu paigham bhejo:"],
   keywordInvitation: ["A word, a meaning, a way into a story.","اک لفظ، اک مطلب، کہانی ول اک راہ۔","Ik lafz, ik matlab, kahani vall ik raah."],

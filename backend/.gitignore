@@ -49,3 +49,5 @@ FOLKLORE.md
 /src/data/seedKeywords.js
 /CURATED.md
 !src/models/curated.test.js
+!src/models/onboarding.test.js
+src/models/onboarding.test.js
