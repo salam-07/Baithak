@@ -14,7 +14,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { useStoryDetail } from '../../lib/storyDetail';
 
 const OPEN_MOTION = { duration: 420, easing: 'cubic-bezier(.22, 1, .36, 1)' };
-const CLOSE_MOTION = { duration: 180, easing: 'cubic-bezier(.4, 0, 1, 1)' };
+const CLOSE_MOTION = { duration: 220, easing: 'cubic-bezier(.4, 0, 1, 1)' };
 const SCRIM_MOTION = { duration: 260, easing: 'ease-out' };
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
@@ -47,6 +47,7 @@ export default function StoryReader({ card, origin, reaction, onLike, onClose })
   const panel = useRef(null);
   const behind = useRef(null);
   const closing = useRef(false);
+  const animations = useRef(new Set());
   // Whether the press that may become a click began on the scrim itself.
   const onScrim = useRef(false);
   const [chosen, setChosen] = useState(null);
@@ -60,6 +61,19 @@ export default function StoryReader({ card, origin, reaction, onLike, onClose })
   const text = texts.find((item) => `${item.language}-${item.script}` === chosen) || textFor(source, contentPreference);
   const preferredAvailable = texts.some((item) => item.language === contentPreference.language && item.script === contentPreference.script);
   const author = source.author?.name || source.author?.username;
+
+  function animate(node, frames, options) {
+    const motion = node.animate(frames, options);
+    const running = animations.current;
+    running.add(motion);
+    motion.finished.then(() => running.delete(motion), () => running.delete(motion));
+    return motion;
+  }
+
+  useEffect(() => {
+    const running = animations.current;
+    return () => { for (const motion of running) motion.cancel(); running.clear(); };
+  }, []);
 
   // The deck holds a screen of its own behind the scrim. Covering it stops a touch
   // from moving it; muting it stops the keyboard and a screen reader from reaching
@@ -85,8 +99,9 @@ export default function StoryReader({ card, origin, reaction, onLike, onClose })
   // effect, so the overlay's first paint is already frame zero of the fade.
   useLayoutEffect(() => {
     const node = root.current;
-    if (!node || prefersReducedMotion()) return;
-    node.animate([{ opacity: 0 }, { opacity: 1 }], SCRIM_MOTION);
+    if (!node?.animate || prefersReducedMotion()) return;
+    const motion = animate(node, [{ opacity: 0 }, { opacity: 1 }], SCRIM_MOTION);
+    return () => motion.cancel();
   }, []);
 
   // The card grows from where it was: measured against the panel it lands on, then
@@ -97,10 +112,10 @@ export default function StoryReader({ card, origin, reaction, onLike, onClose })
     const node = panel.current;
     if (!node) return;
     node.focus({ preventScroll: true });
-    if (!origin || prefersReducedMotion()) return;
+    if (!origin || !node.animate || prefersReducedMotion()) return;
     const target = node.getBoundingClientRect();
     if (!target.width || !target.height) return;
-    const motion = node.animate([
+    const motion = animate(node, [
       {
         transform: `translate(${origin.left - target.left}px, ${origin.top - target.top}px) scale(${origin.width / target.width}, ${origin.height / target.height})`,
         opacity: 0.35,
@@ -108,24 +123,43 @@ export default function StoryReader({ card, origin, reaction, onLike, onClose })
       { transform: 'none', opacity: 1 },
     ], OPEN_MOTION);
     motion.onfinish = () => motion.cancel();
+    return () => motion.cancel();
   }, [origin]);
 
   function close() {
     if (closing.current) return;
     closing.current = true;
-    // Unmuted before the reader is handed back, because the card they came from is
-    // inside the subtree that was muted and an inert element cannot take focus. The
-    // scrim still covers it for the length of the fade.
-    if (behind.current) behind.current.inert = false;
     const node = root.current;
-    if (!node || prefersReducedMotion()) { onClose(); return; }
-    // `fill: 'forwards'` and not just the keyframes. An animation with no fill drops
-    // back to the element's own style the instant it ends, and `onClose` — which
-    // unmounts this — lands a frame later, so the card spent that frame back at full
-    // opacity. That frame is the flicker.
-    const motion = node.animate([{ opacity: 1 }, { opacity: 0 }], { ...CLOSE_MOTION, fill: 'forwards' });
-    panel.current?.animate([{ transform: 'none' }, { transform: 'scale(.97)' }], { ...CLOSE_MOTION, fill: 'forwards' });
-    motion.finished.then(onClose, onClose);
+    const cardNode = panel.current;
+    const finish = () => {
+      // Restore focusability only as the dialog leaves, before the deck restores
+      // focus to the title that opened it.
+      if (behind.current) behind.current.inert = false;
+      onClose();
+    };
+    if (!node?.animate || prefersReducedMotion()) { finish(); return; }
+
+    // Capture presentation values before cancelling: Escape during opening should
+    // reverse the current frame, rather than jumping to the fully opened card.
+    const scrimOpacity = getComputedStyle(node).opacity;
+    const cardStyle = cardNode && getComputedStyle(cardNode);
+    const transform = cardStyle?.transform;
+    const opacity = cardStyle?.opacity;
+    let destination = 'none';
+    if (cardNode && origin && cardNode.offsetWidth && cardNode.offsetHeight) {
+      const rect = cardNode.getBoundingClientRect();
+      const matrix = new DOMMatrixReadOnly(transform === 'none' ? undefined : transform);
+      const left = rect.left - matrix.m41;
+      const top = rect.top - matrix.m42;
+      destination = `translate(${origin.left - left}px, ${origin.top - top}px) scale(${origin.width / cardNode.offsetWidth}, ${origin.height / cardNode.offsetHeight})`;
+    }
+    for (const motion of animations.current) motion.cancel();
+    const motion = animate(node, [{ opacity: scrimOpacity }, { opacity: 0 }], { ...CLOSE_MOTION, fill: 'forwards' });
+    if (cardNode?.animate) animate(cardNode, [
+      { transform, opacity },
+      { transform: destination, opacity: .35 },
+    ], { ...CLOSE_MOTION, fill: 'forwards' });
+    motion.finished.then(finish, () => {});
   }
 
   /* A press anywhere on the scrim closes the reader.

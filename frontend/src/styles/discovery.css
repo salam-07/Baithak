@@ -14,7 +14,7 @@
 .application-ui.baithak-shell .search-field:focus-within { border-color: var(--clay); outline: 1px solid var(--clay); outline-offset: -1px; }
 .application-ui.baithak-shell .search-field input:focus-visible { outline-offset: -4px; }
 .application-ui.baithak-shell .discovery-search .button { border-color: var(--olive); background: var(--olive); color: var(--paper); margin-inline-start: -1px; padding-inline: 24px; }
-.application-ui.baithak-shell .discovery-search .button:hover { background: var(--clay); border-color: var(--clay); }
+.application-ui.baithak-shell .discovery-search .button:hover:not(:disabled) { background: var(--clay); border-color: var(--clay); }
 .application-ui.baithak-shell .directory-note { margin: 0 0 18px; font-size: 12px; line-height: 1.8; color: var(--muted); }
 .application-ui.baithak-shell .keyword-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 18px; }
 .application-ui.baithak-shell .keyword-card { display: flex; flex-direction: column; min-width: 0; padding: 25px 24px 18px; background: var(--definition-paper); border: 1px solid var(--definition-rule); text-decoration: none; color: var(--ink); transition: border-color 180ms ease-out, background-color 180ms ease-out; }

@@ -20,6 +20,7 @@ import SettingsPage from './pages/app/SettingsPage';
 import NotFoundPage from './pages/NotFoundPage';
 import './styles/app.css';
 import './pages/auth/auth.css';
+import './styles/refinements.css';
 export default function App() {
   return <BrowserRouter><AuthProvider><LanguageProvider><StartupBoundary><Routes>
         <Route path="/" element={<HomeRoute />}>

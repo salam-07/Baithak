@@ -1,0 +1,116 @@
+/* Small interaction refinements shared by reading, discovery and account flows.
+   Keep Baithak's typefaces, square controls and warm editorial palette. */
+.application-ui {
+  --press-time: 100ms;
+  --feedback-time: 160ms;
+  font-optical-sizing: auto;
+}
+.application-ui :is(button, a, summary, label, select) { -webkit-tap-highlight-color: transparent; }
+.application-ui :is(button, a, summary, select, .language-mode) { touch-action: manipulation; }
+.application-ui :is(input, textarea) { caret-color: var(--clay); }
+.application-ui :is(input, textarea)::placeholder { color: var(--muted); opacity: 1; }
+.application-ui :is(input, textarea, select) { scroll-margin-block: calc(var(--header-height) + 24px) 120px; }
+.application-ui :is(button, input, textarea, select):disabled { cursor: not-allowed; }
+.application-ui button[aria-busy="true"] { cursor: progress; }
+
+/* A press responds immediately; releasing returns gently to the resting state. */
+.application-ui .button {
+  transition: background-color var(--feedback-time) ease-out,
+    border-color var(--feedback-time) ease-out, transform var(--feedback-time) var(--ease);
+}
+.application-ui .button:active:not(:disabled) { transform: scale(.98); transition-duration: var(--press-time); }
+.application-ui :is(.text-button, .text-link, .guest-link, .reveal) {
+  transition: color var(--feedback-time) ease-out;
+}
+.application-ui :is(.text-button, .text-link, .guest-link, .reveal):active:not(:disabled) { color: var(--clay); }
+.application-ui .button:not(.primary):disabled:hover { background: transparent; }
+.application-ui .language-mode:active > span { background: var(--surface); }
+.application-ui .language-mode input:checked + span { font-weight: 600; }
+.application-ui .language-choice:active { background: var(--surface); }
+.application-ui .language-choice:has(input:focus-visible) { outline: 2px solid var(--clay); outline-offset: -3px; }
+.application-ui .field-control:dir(rtl)::after,
+.application-ui .auth-route-nav:dir(rtl) a::after { transform-origin: right; }
+.application-ui .field-control[data-invalid="true"]:focus-within::after { background: var(--error); }
+.application-ui .reveal:focus-visible { outline-offset: -3px; }
+.application-ui .preference-notice > span { overflow-wrap: anywhere; }
+
+.application-ui.baithak-shell :is(.story-form, .keyword-editor) :is(input, textarea, select) {
+  transition: border-color var(--feedback-time) ease-out, background-color var(--feedback-time) ease-out;
+}
+.application-ui.baithak-shell :is(.story-form, .keyword-editor) :is(input, textarea, select):disabled {
+  background: var(--surface); color: var(--muted);
+}
+.application-ui.baithak-shell .discovery-search .search-field input { font-size: 1rem; }
+.application-ui.baithak-shell .search-field input:focus-visible { outline: none; }
+.application-ui.baithak-shell .search-field:focus-within { outline: 2px solid var(--clay); outline-offset: -2px; }
+.application-ui.baithak-shell .reader-versions { gap: 8px; }
+.application-ui.baithak-shell .reader-versions button {
+  cursor: pointer;
+  transition: background-color var(--feedback-time) ease-out, border-color var(--feedback-time) ease-out;
+}
+.application-ui.baithak-shell .reader-versions button:active { background: var(--surface); }
+.application-ui.baithak-shell .reader-versions button[aria-pressed="true"] { font-weight: 600; }
+.application-ui.baithak-shell .content-tabs { overflow-x: auto; scrollbar-width: thin; }
+.application-ui.baithak-shell .content-tabs a { display: inline-flex; align-items: center; min-height: 44px; flex-shrink: 0; }
+.application-ui.baithak-shell .feed-action-count,
+.application-ui.baithak-shell .word-count { font-variant-numeric: tabular-nums; }
+.application-ui.baithak-shell .feed-card-title button { min-height: 44px; }
+.application-ui.baithak-shell .feed-overlay-card { transform-origin: top left; }
+/* Content script determines the font even when the surrounding interface is English. */
+.application-ui.baithak-shell :is(.feed-card-title, .feed-overlay-title)[lang="pa-Arab"] {
+  font-family: 'Noto Nastaliq Urdu', serif;
+}
+.application-ui.baithak-shell:lang(pa-Arab) :is(.nav-link, .page-heading h1) { letter-spacing: normal; }
+.application-ui.baithak-shell .feed-deck:dir(rtl) .feed-card-open svg { transform: scaleX(-1); }
+.application-ui.baithak-shell .feed-deck:dir(rtl) .feed-card:hover .feed-card-open svg { transform: translateX(-3px) scaleX(-1); }
+.application-ui.baithak-shell .feed-panel { max-height: min(360px, 60svh); overflow-y: auto; }
+
+@media (hover: hover) and (pointer: fine) {
+  .application-ui.baithak-shell .reader-versions button:hover { background: var(--surface); }
+  .application-ui.baithak-shell .profile-setting:hover { background: color-mix(in srgb, var(--surface) 45%, transparent); }
+}
+@media (max-width: 680px) {
+  /* Only floating chrome uses a light material, with solid fallbacks below. */
+  .application-ui.baithak-shell .main-navigation {
+    background: color-mix(in srgb, var(--paper) 94%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  .application-ui.baithak-shell .nav-popup:popover-open {
+    box-shadow: 0 12px 32px -12px #302b2340;
+    transform-origin: bottom right;
+    opacity: 1;
+    transform: none;
+    transition: opacity 160ms ease-out, transform 200ms var(--ease),
+      display 200ms allow-discrete, overlay 200ms allow-discrete;
+  }
+  @starting-style {
+    .application-ui.baithak-shell .nav-popup:popover-open { opacity: 0; transform: translateY(6px); }
+  }
+  .application-ui.baithak-shell .nav-popup-link:active { background: var(--surface); color: var(--clay); }
+  .application-ui.baithak-shell .nav-link.nav-menu-toggle[aria-expanded="true"] { color: var(--clay); background: var(--surface); }
+}
+
+/* Preferences are independent: less motion, opaque materials, stronger edges. */
+@media (prefers-reduced-motion: reduce) {
+  .application-ui :is(.button, .button .action-arrow, .nav-icon, .feed-action,
+    .feed-card-open svg) { transform: none !important; }
+  .application-ui[dir="rtl"] :is(.button .action-arrow, .feed-card-open svg) { transform: scaleX(-1) !important; }
+  .application-ui .field-control::after,
+  .application-ui .auth-route-nav a::after { transition: none; }
+}
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .application-ui.baithak-shell .main-navigation { background: var(--paper); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .application-ui.baithak-shell .feed-rail::before { background: var(--paper); }
+}
+@media (prefers-contrast: more) {
+  .application-ui { --rule: #80715a; }
+  .application-ui.baithak-shell { --definition-rule: #80715a; }
+  .application-ui :focus-visible { outline-width: 3px; }
+  .application-ui .field-control { border-bottom-color: var(--ink); }
+}
+@media (forced-colors: active) {
+  .application-ui.baithak-shell :is(.feed-action, .reader-versions button) { border-color: ButtonText; }
+  .application-ui.baithak-shell :is(.feed-action, .reader-versions button)[aria-pressed="true"] { outline: 2px solid Highlight; outline-offset: -4px; }
+  .application-ui.baithak-shell .main-navigation { background: Canvas; backdrop-filter: none; }
+}
